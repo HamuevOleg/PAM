@@ -1,0 +1,17 @@
+.DS_Store
+.claude/
+.codex/
+.idea/
+**/xcuserdata/
+**/.dart_tool/
+**/build/
+**/coverage/
+**/DerivedData/
+**/Pods/
+**/.swiftpm/
+*.log
+.env
+.env.*
+!.env.example
+*.p12
+*.mobileprovision
