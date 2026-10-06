@@ -75,8 +75,8 @@ mobile application with offline access, notifications and interactive carpooling
 
 - [x] Choose topic, describe the idea (this README)
 - [x] Set up Flutter project and iOS build
-- [ ] UI: Home board and Race Index screens
-- [ ] Race Details and Transfer screens
+- [x] UI: Home board and Race Index screens
+- [x] Race Details and Transfer screens
 - [ ] Local data layer and favourites
 - [ ] Notifications and reminders
 - [ ] Testing, polishing, final presentation
@@ -87,6 +87,7 @@ mobile application with offline access, notifications and interactive carpooling
 | Lab | Contents | Status |
 |---|---|---|
 | [Lab 1](Lab1/README.md) | Dart E1–E6, Flutter counter, iOS project, report | Ready |
+| [Lab 2](Lab2/README.md) | RunBaza UI, distance screens, animated city illustrations, report | Ready |
 
 ## Development and CI
 
@@ -96,3 +97,8 @@ formatting, static analysis, tests, and an unsigned iOS Simulator build.
 committed so local and CI dependency versions stay consistent.
 
 Work in a separate branch and open a pull request into `main`.
+
+Lab 2 currently uses static data. Authentication, registration, carpool booking,
+search/filter behaviour and persistence are planned features, not live services.
+
+![RunBaza interface](Lab2/evidence/redesign-2026-09-28/preview.jpg)
