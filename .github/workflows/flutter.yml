@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        project: [Lab1/hello_pam]
+        project: [Lab1/hello_pam, Lab2/run_baza]
     defaults:
       run:
         working-directory: ${{ matrix.project }}
@@ -56,7 +56,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        project: [Lab1/hello_pam]
+        project: [Lab1/hello_pam, Lab2/run_baza]
     defaults:
       run:
         working-directory: ${{ matrix.project }}
