@@ -1,0 +1,88 @@
+name: Flutter CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: flutter-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: '3.47.0'
+
+jobs:
+  checks:
+    name: Analyze and test (${{ matrix.project }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [Lab1/hello_pam]
+    defaults:
+      run:
+        working-directory: ${{ matrix.project }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - run: flutter pub get --enforce-lockfile
+      - run: dart format --output=none --set-exit-if-changed lib test
+      - run: flutter analyze --fatal-infos
+      - run: flutter test
+      - name: Dart exercises
+        if: matrix.project == 'Lab1/hello_pam'
+        run: |
+          dart format --output=none --set-exit-if-changed ../dart_exercises
+          dart analyze ../dart_exercises
+          dart run ../dart_exercises/check.dart
+
+  ios:
+    name: iOS simulator build (${{ matrix.project }})
+    runs-on: macos-15
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [Lab1/hello_pam]
+    defaults:
+      run:
+        working-directory: ${{ matrix.project }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - run: flutter pub get --enforce-lockfile
+      - run: flutter build ios --simulator --debug --no-codesign
+
+  ci:
+    name: CI passed
+    if: always()
+    needs: [checks, ios]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require all checks
+        env:
+          CHECKS_RESULT: ${{ needs.checks.result }}
+          IOS_RESULT: ${{ needs.ios.result }}
+        run: |
+          test "$CHECKS_RESULT" = success
+          test "$IOS_RESULT" = success
