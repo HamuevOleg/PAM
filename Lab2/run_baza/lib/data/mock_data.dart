@@ -314,3 +314,11 @@ RaceMotif motifForRace(Race race, [double? distance]) =>
         distance >= 20
     ? RaceMotif.stefan
     : race.artwork;
+
+/// External route parameters must not make firstWhere throw.
+Race? findRace(String id) {
+  for (final race in races) {
+    if (race.id == id) return race;
+  }
+  return null;
+}

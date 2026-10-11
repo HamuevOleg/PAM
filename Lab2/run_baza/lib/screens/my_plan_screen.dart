@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../data/mock_data.dart';
 import '../widgets/design.dart';
 import '../widgets/race_card.dart';
-import 'race_details_screen.dart';
 
 class MyPlanScreen extends StatelessWidget {
   const MyPlanScreen({super.key});
@@ -47,10 +47,7 @@ class MyPlanScreen extends StatelessWidget {
           RaceCard(
             race: raceById(entry.raceId),
             reminder: 'Напомнить за ${entry.reminderDays} дн. до старта',
-            onTap: () => openScreen(
-              context,
-              RaceDetailsScreen(race: raceById(entry.raceId)),
-            ),
+            onTap: () => context.push('/races/${entry.raceId}'),
           ),
       ],
     ),
