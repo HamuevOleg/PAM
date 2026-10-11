@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../data/mock_data.dart';
 import '../widgets/design.dart';
 import '../widgets/race_motif.dart';
 import '../widgets/distance_option.dart';
-import 'distance_screen.dart';
 import '../widgets/race_card.dart';
 import '../widgets/status_badge.dart';
-import 'login_screen.dart';
-import 'race_index_screen.dart';
-import 'race_details_screen.dart';
-import 'transfer_screen.dart';
-import 'my_plan_screen.dart';
-import 'settings_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -40,8 +34,8 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            tooltip: 'Вход',
-            onPressed: () => openScreen(context, const LoginScreen()),
+            tooltip: 'Профиль',
+            onPressed: () => context.go('/profile'),
             icon: const Icon(Icons.person_outline),
           ),
           const SizedBox(width: 8),
@@ -49,40 +43,6 @@ class HomeScreen extends StatelessWidget {
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(1),
           child: Divider(),
-        ),
-      ),
-      bottomNavigationBar: SafeArea(
-        top: false,
-        child: Container(
-          decoration: BoxDecoration(
-            color: s.surface,
-            border: Border(top: BorderSide(color: s.outlineVariant)),
-          ),
-          padding: const EdgeInsets.fromLTRB(6, 4, 6, 0),
-          child: Row(
-            children: [
-              _nav(context, 'Главная', Icons.grid_view, null, true),
-              _nav(
-                context,
-                'Забеги',
-                Icons.calendar_month_outlined,
-                const RaceIndexScreen(),
-              ),
-              _nav(
-                context,
-                'Попутки',
-                Icons.directions_car_outlined,
-                TransferScreen(race: next),
-              ),
-              _nav(
-                context,
-                'Мой план',
-                Icons.bookmark_outline,
-                const MyPlanScreen(),
-              ),
-              _nav(context, 'Профиль', Icons.tune, const SettingsScreen()),
-            ],
-          ),
         ),
       ),
       body: ListView(
@@ -169,8 +129,7 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton(
-                    onPressed: () =>
-                        openScreen(context, RaceDetailsScreen(race: next)),
+                    onPressed: () => context.push('/races/${next.id}'),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -185,7 +144,7 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           InkWell(
-            onTap: () => openScreen(context, TransferScreen(race: next)),
+            onTap: () => context.push('/transfers/${next.id}'),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Row(
@@ -230,10 +189,8 @@ class HomeScreen extends StatelessWidget {
                       child: DistanceOption(
                         race: race,
                         distance: d,
-                        onTap: () => openScreen(
-                          context,
-                          DistanceScreen(race: race, distance: d),
-                        ),
+                        onTap: () =>
+                            context.push('/races/${race.id}/distance/$d'),
                       ),
                     ),
                 ],
@@ -244,57 +201,16 @@ class HomeScreen extends StatelessWidget {
             '03',
             'Календарь',
             trailing: TextButton(
-              onPressed: () => openScreen(context, const RaceIndexScreen()),
+              onPressed: () => context.go('/races'),
               child: const Text('Все 8 →'),
             ),
           ),
           for (final race in races)
             RaceCard(
               race: race,
-              onTap: () => openScreen(context, RaceDetailsScreen(race: race)),
+              onTap: () => context.push('/races/${race.id}'),
             ),
         ],
-      ),
-    );
-  }
-
-  Widget _nav(
-    BuildContext context,
-    String label,
-    IconData icon,
-    Widget? page, [
-    bool active = false,
-  ]) {
-    final s = Theme.of(context).colorScheme;
-    return Expanded(
-      child: Semantics(
-        selected: active,
-        child: InkWell(
-          onTap: page == null ? null : () => openScreen(context, page),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  icon,
-                  size: 21,
-                  color: active ? s.primary : s.onSurfaceVariant,
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  label,
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: active ? FontWeight.w700 : FontWeight.w500,
-                    color: active ? s.primary : s.onSurfaceVariant,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }

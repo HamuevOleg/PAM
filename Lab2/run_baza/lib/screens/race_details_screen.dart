@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../data/mock_data.dart';
+import 'not_found_screen.dart';
 import '../widgets/design.dart';
 import '../widgets/race_motif.dart';
 import '../widgets/status_badge.dart';
 import '../widgets/info_row.dart';
-import 'transfer_screen.dart';
-import 'distance_screen.dart';
 import '../widgets/distance_option.dart';
 
 class RaceDetailsScreen extends StatelessWidget {
-  final Race race;
-  const RaceDetailsScreen({super.key, required this.race});
+  final String id;
+  const RaceDetailsScreen({super.key, required this.id});
   @override
   Widget build(BuildContext context) {
+    final race = findRace(id);
+    if (race == null) return const NotFoundScreen();
     final t = Theme.of(context);
     final s = t.colorScheme;
     final canRegister = [
@@ -137,10 +139,8 @@ class RaceDetailsScreen extends StatelessWidget {
                       child: DistanceOption(
                         race: race,
                         distance: d,
-                        onTap: () => openScreen(
-                          context,
-                          DistanceScreen(race: race, distance: d),
-                        ),
+                        onTap: () =>
+                            context.push('/races/${race.id}/distance/$d'),
                       ),
                     ),
                 ],
@@ -198,7 +198,7 @@ class RaceDetailsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 18),
           OutlinedButton.icon(
-            onPressed: () => openScreen(context, TransferScreen(race: race)),
+            onPressed: () => context.push('/transfers/${race.id}'),
             icon: const Icon(Icons.directions_car_outlined),
             label: const Text('Найти попутчиков'),
           ),

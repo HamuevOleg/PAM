@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../widgets/design.dart';
 import '../widgets/event_glyph.dart';
@@ -60,7 +61,7 @@ class LoginScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             FilledButton(
-              onPressed: () => Navigator.maybePop(context),
+              onPressed: () => context.pop(),
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [Text('Войти'), Icon(Icons.arrow_forward, size: 20)],

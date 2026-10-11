@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../widgets/design.dart';
-import 'login_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -84,7 +84,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           const SectionHeading('03', 'Аккаунт'),
           OutlinedButton.icon(
-            onPressed: () => openScreen(context, const LoginScreen()),
+            onPressed: () => context.go('/login'),
             icon: const Icon(Icons.login),
             label: const Text('Экран входа'),
           ),

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-void openScreen(BuildContext context, Widget screen) =>
-    Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => screen));
-
 class Eyebrow extends StatelessWidget {
   final String text;
   const Eyebrow(this.text, {super.key});

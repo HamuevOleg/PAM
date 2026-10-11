@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../data/distance_profile.dart';
 import '../data/mock_data.dart';
+import 'not_found_screen.dart';
 import '../widgets/design.dart';
 import '../widgets/animated_route.dart';
 import '../widgets/info_row.dart';
 import '../widgets/status_badge.dart';
-import 'transfer_screen.dart';
 
 class DistanceScreen extends StatelessWidget {
-  final Race race;
+  final String id;
   final double distance;
-  const DistanceScreen({super.key, required this.race, required this.distance});
+  const DistanceScreen({super.key, required this.id, required this.distance});
 
   @override
   Widget build(BuildContext context) {
+    final race = findRace(id);
+    if (race == null) return const NotFoundScreen();
+    if (!race.distances.contains(distance)) return const NotFoundScreen();
     final t = Theme.of(context);
     final s = t.colorScheme;
     final profile = DistanceProfile(distance);
@@ -37,7 +41,7 @@ class DistanceScreen extends StatelessWidget {
             border: Border(top: BorderSide(color: s.outlineVariant)),
           ),
           child: FilledButton.icon(
-            onPressed: () => openScreen(context, TransferScreen(race: race)),
+            onPressed: () => context.push('/transfers/${race.id}'),
             icon: const Icon(Icons.directions_car_outlined, size: 21),
             label: const Text(
               'На старт с попутчиками',
@@ -219,7 +223,7 @@ class DistanceScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           OutlinedButton.icon(
-            onPressed: () => Navigator.maybePop(context),
+            onPressed: () => context.pop(),
             icon: const Icon(Icons.arrow_back, size: 18),
             label: const Text('Вернуться к забегу'),
           ),
