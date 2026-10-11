@@ -46,7 +46,7 @@ flutter drive --driver=test_driver/lab3_driver.dart \
   --target=integration_test/lab3_test.dart -d <simulator-id>
 ```
 
-99 unit/widget-тестов: валидация, стеки и состояние вкладок, ошибочные адреса,
+100 unit/widget-тестов: валидация, стеки и состояние вкладок, ошибочные адреса,
 диалоги, анимации, ширины 320–430, обе темы, масштаб текста до 160%.
 Интеграционный сценарий на iOS сохраняет реальные снимки в `Lab3/evidence/ios`.
 
