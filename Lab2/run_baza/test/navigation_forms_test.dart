@@ -64,6 +64,26 @@ void main() {
     expect(Validators.phone('+37360000000'), isNull);
     expect(Validators.phone('373+60000000'), isNotNull);
   });
+  testWidgets(
+    'Small viewport validates off-screen dropdown and retains its error',
+    (tester) async {
+      final router = await launch(tester, '/transfers/r1/offer');
+      tester.view.physicalSize = const Size(320, 600);
+      await tester.pumpAndSettle();
+      await tapVisible(tester, find.byKey(const Key('submit-form')));
+      expect(
+        router.routeInformationProvider.value.uri.path,
+        '/transfers/r1/offer',
+      );
+      expect(find.text('Выберите город выезда'), findsOneWidget);
+      expect(find.text('От 1 до 8 мест'), findsOneWidget);
+      expect(find.text('От 0 до 5000 MDL'), findsOneWidget);
+      await tester.drag(find.byType(ListView).last, const Offset(0, 1200));
+      await tester.pumpAndSettle();
+      expect(find.text('Выберите город выезда'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
   testWidgets('Login validates, then go removes login from history', (
     tester,
   ) async {
