@@ -27,7 +27,13 @@ void main() {
         await tester.scrollUntilVisible(
           f,
           300,
-          scrollable: find.byType(Scrollable).last,
+          scrollable: find
+              .byWidgetPredicate(
+                (widget) =>
+                    widget is Scrollable &&
+                    widget.axisDirection == AxisDirection.down,
+              )
+              .last,
         );
       }
       await tester.ensureVisible(f);
