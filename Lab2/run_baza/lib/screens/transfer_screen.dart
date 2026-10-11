@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../data/mock_data.dart';
 import 'not_found_screen.dart';
@@ -65,11 +66,14 @@ class TransferScreen extends StatelessWidget {
             runSpacing: 10,
             children: [
               FilledButton.icon(
-                onPressed: () {},
+                onPressed: () => context.push('/transfers/$id/offer'),
                 icon: const Icon(Icons.add, size: 18),
                 label: const Text('Я водитель'),
               ),
-              OutlinedButton(onPressed: () {}, child: const Text('Ищу место')),
+              OutlinedButton(
+                onPressed: () => context.push('/transfers/$id/request'),
+                child: const Text('Ищу место'),
+              ),
             ],
           ),
           SectionHeading(
@@ -153,7 +157,8 @@ class TransferScreen extends StatelessWidget {
                           style: t.textTheme.titleMedium,
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () =>
+                              context.push('/transfers/$id/request'),
                           child: const Text('Запросить место ↗'),
                         ),
                       ],
