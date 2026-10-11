@@ -28,21 +28,30 @@ class FormLayout extends StatelessWidget {
         padding: const EdgeInsets.all(22),
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         children: [
-          Eyebrow(eyebrow),
-          const SizedBox(height: 16),
-          Text(title, style: Theme.of(context).textTheme.headlineLarge),
-          const SizedBox(height: 12),
-          Text(description),
-          const SizedBox(height: 26),
-          for (final field in fields)
-            Padding(padding: const EdgeInsets.only(bottom: 18), child: field),
-          FilledButton.icon(
-            key: const Key('submit-form'),
-            onPressed: onSubmit,
-            icon: const Icon(Icons.check),
-            label: const Text('Подтвердить'),
+          // Keep every FormField mounted so validate checks off-screen fields.
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Eyebrow(eyebrow),
+              const SizedBox(height: 16),
+              Text(title, style: Theme.of(context).textTheme.headlineLarge),
+              const SizedBox(height: 12),
+              Text(description),
+              const SizedBox(height: 26),
+              for (final field in fields)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 18),
+                  child: field,
+                ),
+              FilledButton.icon(
+                key: const Key('submit-form'),
+                onPressed: onSubmit,
+                icon: const Icon(Icons.check),
+                label: const Text('Подтвердить'),
+              ),
+              const SizedBox(height: 24),
+            ],
           ),
-          const SizedBox(height: 24),
         ],
       ),
     ),

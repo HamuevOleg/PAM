@@ -17,6 +17,8 @@ void main() {
     }
 
     Future<void> route(String path) async {
+      ScaffoldMessenger.of(tester.element(find.byType(Scaffold).first))
+          .clearSnackBars();
       router.go(path);
       await tester.pumpAndSettle();
     }
@@ -93,6 +95,8 @@ void main() {
       await tapKey('submit-form');
       await tester.drag(find.byType(ListView).last, const Offset(0, 900));
       await tester.pumpAndSettle();
+      expect(find.text('Выберите город выезда'), findsOneWidget);
+      expect(find.text('От 1 до 8 мест'), findsOneWidget);
       await shot(name);
       if (mode == 'offer') {
         await tester.drag(find.byType(ListView).last, const Offset(0, -700));
