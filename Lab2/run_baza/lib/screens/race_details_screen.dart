@@ -28,8 +28,8 @@ class RaceDetailsScreen extends StatelessWidget {
         title: Text(race.code),
         actions: [
           IconButton(
-            tooltip: 'Сохранить забег',
-            onPressed: () {},
+            tooltip: 'Мой старт',
+            onPressed: () => context.push('/races/$id/participate'),
             icon: const Icon(Icons.bookmark_outline),
           ),
         ],
@@ -61,9 +61,11 @@ class RaceDetailsScreen extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: FilledButton(
-                  onPressed: canRegister ? () {} : null,
+                  onPressed: canRegister
+                      ? () => context.push('/races/$id/participate')
+                      : null,
                   child: Text(
-                    canRegister ? 'Регистрация ↗' : 'Недоступно',
+                    canRegister ? 'Я бегу →' : 'Недоступно',
                     textAlign: TextAlign.center,
                   ),
                 ),

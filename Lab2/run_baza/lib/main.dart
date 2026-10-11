@@ -6,35 +6,35 @@ import 'router.dart';
 
 void main() => runApp(const RunBazaApp());
 
-// Palette translated from the reference's platform.css and industrial.css.
+// Samepace reference: warm paper/orange in light, graphite/lime in dark.
 // All screens read these semantic colours, including in iOS dark mode.
 ThemeData buildTheme(Brightness brightness) {
   final dark = brightness == Brightness.dark;
   final scheme =
       ColorScheme.fromSeed(
-        seedColor: const Color(0xFF236649),
+        seedColor: const Color(0xFFA44920),
         brightness: brightness,
       ).copyWith(
-        primary: dark ? const Color(0xFF9BD9B5) : const Color(0xFF236649),
-        onPrimary: dark ? const Color(0xFF141B18) : Colors.white,
-        surface: dark ? const Color(0xFF141B18) : const Color(0xFFFAFBF8),
-        onSurface: dark ? const Color(0xFFEDF3EF) : const Color(0xFF202323),
+        primary: dark ? const Color(0xFFE4FF00) : const Color(0xFFA44920),
+        onPrimary: dark ? const Color(0xFF141414) : Colors.white,
+        surface: dark ? const Color(0xFF141414) : const Color(0xFFF5F1E8),
+        onSurface: dark ? const Color(0xFFF8F8F5) : const Color(0xFF202020),
         onSurfaceVariant: dark
-            ? const Color(0xFFADBCB3)
-            : const Color(0xFF626967),
-        surfaceContainerLow: dark ? const Color(0xFF1D2822) : Colors.white,
+            ? const Color(0xFFB8B8B4)
+            : const Color(0xFF69645C),
+        surfaceContainerLow: dark ? const Color(0xFF202020) : Colors.white,
         surfaceContainer: dark
-            ? const Color(0xFF24332B)
-            : const Color(0xFFEEF0E8),
+            ? const Color(0xFF2B2B2B)
+            : const Color(0xFFEDE7DC),
         surfaceContainerHighest: dark
-            ? const Color(0xFF304C3B)
-            : const Color(0xFFD0DFC8),
+            ? const Color(0xFF393D26)
+            : const Color(0xFFF0DDC8),
         primaryContainer: dark
-            ? const Color(0xFF253E30)
-            : const Color(0xFFEDF7EE),
+            ? const Color(0xFF34391C)
+            : const Color(0xFFFAE9DB),
         onPrimaryContainer: dark
-            ? const Color(0xFF9BD9B5)
-            : const Color(0xFF236649),
+            ? const Color(0xFFE4FF00)
+            : const Color(0xFFA44920),
         tertiary: dark ? const Color(0xFFFF8058) : const Color(0xFFA33D19),
         tertiaryContainer: dark
             ? const Color(0xFF392C21)
@@ -43,8 +43,8 @@ ThemeData buildTheme(Brightness brightness) {
             ? const Color(0xFFFFCEB8)
             : const Color(0xFF70270F),
         outlineVariant: dark
-            ? const Color(0xFF34433A)
-            : const Color(0xFFDDE3DC),
+            ? const Color(0xFF40403B)
+            : const Color(0xFFDED6CA),
       );
   final base = ThemeData(useMaterial3: true, colorScheme: scheme);
   final text = base.textTheme
@@ -106,6 +106,14 @@ ThemeData buildTheme(Brightness brightness) {
   );
   return base.copyWith(
     textTheme: text,
+    navigationBarTheme: NavigationBarThemeData(
+      height: 68,
+      backgroundColor: scheme.surface,
+      indicatorColor: scheme.primaryContainer,
+      labelTextStyle: const WidgetStatePropertyAll(
+        TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+      ),
+    ),
     scaffoldBackgroundColor: scheme.surface,
     appBarTheme: AppBarTheme(
       backgroundColor: scheme.surface,
