@@ -88,6 +88,7 @@ mobile application with offline access, notifications and interactive carpooling
 |---|---|---|
 | [Lab 1](Lab1/README.md) | Dart E1–E6, Flutter counter, iOS project, report | Ready |
 | [Lab 2](Lab2/README.md) | RunBaza UI, distance screens, animated city illustrations, report | Ready |
+| [Lab 3](Lab3/README.md) | Router, five stateful tabs, forms, validation, iOS evidence and defense guide | Ready |
 
 ## Development and CI
 
@@ -98,7 +99,8 @@ committed so local and CI dependency versions stay consistent.
 
 Work in a separate branch and open a pull request into `main`.
 
-Lab 2 currently uses static data. Authentication, registration, carpool booking,
-search/filter behaviour and persistence are planned features, not live services.
+The current app continues in `Lab2/run_baza`; Lab 3 adds navigation, local search,
+forms and validation. Authentication, registration, carpool booking and persistence
+remain planned features. Lab 2 is preserved in `lab/2-runbaza-ui`.
 
 ![RunBaza interface](Lab2/evidence/redesign-2026-09-28/preview.jpg)
