@@ -155,6 +155,7 @@ ThemeData buildTheme(Brightness brightness) {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
+      errorMaxLines: 3,
       filled: true,
       fillColor: scheme.surfaceContainerLow,
       contentPadding: const EdgeInsets.all(16),
