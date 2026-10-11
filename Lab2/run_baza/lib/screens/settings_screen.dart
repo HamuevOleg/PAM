@@ -1,99 +1,154 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../forms/validators.dart';
 import '../widgets/design.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _name = TextEditingController(text: 'Hamuev Oleg');
+  final _pace = TextEditingController(text: '6:00');
+  String? _city = 'Chișinău';
+  @override
+  void dispose() {
+    _name.dispose();
+    _pace.dispose();
+    super.dispose();
+  }
+
+  Future<void> _logout() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Выйти из профиля?'),
+        content: const Text(
+          'Несохранённые поля будут сброшены. Можно будет войти снова.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Остаться'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Выйти'),
+          ),
+        ],
+      ),
+    );
+    if (!mounted || confirmed != true) return;
+    context.go('/login');
+  }
+
   @override
   Widget build(BuildContext context) {
     final t = Theme.of(context);
-    final s = t.colorScheme;
     return Scaffold(
-      appBar: AppBar(title: const Text('Настройки')),
-      body: ListView(
-        padding: const EdgeInsets.all(22),
-        children: [
-          const Eyebrow('04 / ТВОЙ ПРОФИЛЬ'),
-          const SizedBox(height: 18),
-          Text('Бег начинается\nс тебя.', style: t.textTheme.headlineLarge),
-          const SizedBox(height: 26),
-          CutPanel(
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 29,
-                  backgroundColor: s.primary,
-                  foregroundColor: s.onPrimary,
-                  child: const Text(
-                    'HO',
-                    style: TextStyle(fontWeight: FontWeight.w700),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      appBar: AppBar(title: const Text('Профиль')),
+      body: Form(
+        key: _formKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: ListView(
+          padding: const EdgeInsets.all(22),
+          children: [
+            const Eyebrow('04 / ТВОЙ БЕГОВОЙ ПАСПОРТ'),
+            const SizedBox(height: 18),
+            Text(
+              'Каждый старт\nначинается с тебя.',
+              style: t.textTheme.headlineLarge,
+            ),
+            const SizedBox(height: 24),
+            CutPanel(
+              color: t.colorScheme.surfaceContainerHighest,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Hamuev Oleg', style: t.textTheme.titleLarge),
-                      const SizedBox(height: 5),
-                      const Text('Chișinău · начинающий сезон'),
+                      Eyebrow('RUNNER / CR232'),
+                      Icon(Icons.fingerprint, size: 36),
                     ],
                   ),
-                ),
-              ],
+                  const SizedBox(height: 18),
+                  Text('Hamuev Oleg', style: t.textTheme.headlineMedium),
+                  const SizedBox(height: 8),
+                  const Text('Chișinău, Молдова'),
+                  const SizedBox(height: 20),
+                  const Divider(),
+                  const SizedBox(height: 16),
+                  const Row(
+                    children: [
+                      Expanded(child: Metric('06', 'стартов в плане')),
+                      Expanded(child: Metric('—', 'подтверждённых финишей')),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SectionHeading('01', 'Предпочтения'),
-          const DropdownMenu<String>(
-            initialSelection: 'Chișinău',
-            expandedInsets: EdgeInsets.zero,
-            label: Text('Домашний город'),
-            dropdownMenuEntries: [
-              DropdownMenuEntry(value: 'Chișinău', label: 'Chișinău'),
-              DropdownMenuEntry(value: 'Iași', label: 'Iași'),
-              DropdownMenuEntry(value: 'București', label: 'București'),
-            ],
-          ),
-          const SizedBox(height: 18),
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: const Icon(Icons.brightness_auto_outlined),
-            title: const Text('Оформление'),
-            subtitle: const Text('Светлая и тёмная темы — как в iOS'),
-            trailing: Text(
-              t.brightness == Brightness.dark ? 'Тёмная' : 'Светлая',
-              style: t.textTheme.bodySmall,
+            const SectionHeading('01', 'Мои данные'),
+            TextFormField(
+              key: const Key('profile-name'),
+              controller: _name,
+              decoration: const InputDecoration(labelText: 'Имя'),
+              validator: Validators.name,
+              textCapitalization: TextCapitalization.words,
             ),
-          ),
-          const SectionHeading('02', 'Не пропусти старт'),
-          SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            title: const Text('Уведомления'),
-            subtitle: const Text('Перед стартом и закрытием регистрации'),
-            value: true,
-            onChanged: (_) {},
-          ),
-          const Divider(),
-          SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            title: const Text('Напоминания о поездке'),
-            subtitle: const Text('За день до выезда'),
-            value: true,
-            onChanged: (_) {},
-          ),
-          const SectionHeading('03', 'Аккаунт'),
-          OutlinedButton.icon(
-            onPressed: () => context.go('/login'),
-            icon: const Icon(Icons.login),
-            label: const Text('Экран входа'),
-          ),
-          const SizedBox(height: 22),
-          Text(
-            'RunBaza · версия 1.0',
-            style: t.textTheme.bodySmall?.copyWith(color: s.onSurfaceVariant),
-          ),
-        ],
+            const SizedBox(height: 18),
+            DropdownButtonFormField<String>(
+              key: const Key('profile-city'),
+              initialValue: _city,
+              isExpanded: true,
+              decoration: const InputDecoration(labelText: 'Домашний город'),
+              items: [
+                'Chișinău',
+                'Bălți',
+                'Iași',
+                'București',
+              ].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+              onChanged: (v) => setState(() => _city = v),
+              validator: (v) => v == null ? 'Выберите город' : null,
+            ),
+            const SizedBox(height: 18),
+            TextFormField(
+              key: const Key('profile-pace'),
+              controller: _pace,
+              keyboardType: TextInputType.datetime,
+              decoration: const InputDecoration(
+                labelText: 'Комфортный темп, мин/км',
+                hintText: '6:00',
+              ),
+              validator: Validators.pace,
+            ),
+            const SizedBox(height: 20),
+            FilledButton(
+              key: const Key('profile-submit'),
+              onPressed: () {
+                if (!_formKey.currentState!.validate()) return;
+                FocusScope.of(context).unfocus();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Данные профиля проверены')),
+                );
+              },
+              child: const Text('Проверить данные'),
+            ),
+            const SectionHeading('02', 'Аккаунт'),
+            OutlinedButton.icon(
+              key: const Key('logout'),
+              onPressed: _logout,
+              icon: const Icon(Icons.logout),
+              label: const Text('Выйти из профиля'),
+            ),
+            const SizedBox(height: 24),
+            Text('RunBaza · На одной волне', style: t.textTheme.bodySmall),
+          ],
+        ),
       ),
     );
   }
