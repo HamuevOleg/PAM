@@ -16,17 +16,17 @@ void main() {
   final screens = <Widget>[
     const HomeScreen(),
     const RaceIndexScreen(),
-    RaceDetailsScreen(race: races.first),
-    TransferScreen(race: races.first),
+    RaceDetailsScreen(id: races.first.id),
+    TransferScreen(id: races.first.id),
     const MyPlanScreen(),
     const SettingsScreen(),
     const LoginScreen(),
-    DistanceScreen(race: races[1], distance: 5),
-    DistanceScreen(race: races.first, distance: 10),
-    DistanceScreen(race: races.first, distance: 21.1),
-    DistanceScreen(race: races[6], distance: 42.2),
-    RaceDetailsScreen(race: races[2]),
-    DistanceScreen(race: races[2], distance: 10),
+    DistanceScreen(id: races[1].id, distance: 5),
+    DistanceScreen(id: races.first.id, distance: 10),
+    DistanceScreen(id: races.first.id, distance: 21.1),
+    DistanceScreen(id: races[6].id, distance: 42.2),
+    RaceDetailsScreen(id: races[2].id),
+    DistanceScreen(id: races[2].id, distance: 10),
   ];
   for (final (width, brightness, scale) in [
     (320.0, Brightness.light, 1.2),
@@ -96,9 +96,9 @@ void main() {
       await tester.tap(option);
       await tester.pumpAndSettle();
       final page = tester.widget<DistanceScreen>(find.byType(DistanceScreen));
-      expect(page.race.id, raceId);
+      expect(page.id, raceId);
       expect(page.distance, distance);
-      expect(find.text(page.race.locationLabel), findsOneWidget);
+      expect(find.text(raceById(page.id).locationLabel), findsOneWidget);
     });
   }
   testWidgets('Home reaches calendar and returns', (tester) async {
@@ -136,7 +136,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: buildTheme(Brightness.light),
-          home: RaceDetailsScreen(race: races.first),
+          home: RaceDetailsScreen(id: races.first.id),
         ),
       );
       final choice = find.byWidgetPredicate(
@@ -151,7 +151,7 @@ void main() {
       await tester.pumpAndSettle();
       final page = tester.widget<DistanceScreen>(find.byType(DistanceScreen));
       expect(page.distance, distance);
-      expect(page.race.id, races.first.id);
+      expect(page.id, races.first.id);
       expect(
         find.text(distance == 10 ? 'Десятка' : 'Полумарафон'),
         findsWidgets,
@@ -159,7 +159,7 @@ void main() {
       await tester.tap(find.text('На старт с попутчиками'));
       await tester.pumpAndSettle();
       expect(
-        tester.widget<TransferScreen>(find.byType(TransferScreen)).race.id,
+        tester.widget<TransferScreen>(find.byType(TransferScreen)).id,
         races.first.id,
       );
       await tester.pageBack();

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../data/mock_data.dart';
 import '../widgets/design.dart';
 import '../widgets/race_card.dart';
-import 'race_details_screen.dart';
 
 class RaceIndexScreen extends StatelessWidget {
   const RaceIndexScreen({super.key});
@@ -76,7 +76,7 @@ class RaceIndexScreen extends StatelessWidget {
               ),
             RaceCard(
               race: race,
-              onTap: () => openScreen(context, RaceDetailsScreen(race: race)),
+              onTap: () => context.push('/races/${race.id}'),
             ),
           ],
         );
