@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'widgets/app_shell.dart';
 
 import 'screens/home_screen.dart';
+import 'screens/trip_form_screen.dart';
+import 'screens/participation_form_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/race_index_screen.dart';
 import 'screens/race_details_screen.dart';
@@ -42,6 +44,12 @@ GoRouter createRouter({String initialLocation = '/login'}) => GoRouter(
                       RaceDetailsScreen(id: state.pathParameters['id']!),
                   routes: [
                     GoRoute(
+                      path: 'participate',
+                      builder: (context, state) => ParticipationFormScreen(
+                        id: state.pathParameters['id']!,
+                      ),
+                    ),
+                    GoRoute(
                       path: 'distance/:km',
                       builder: (context, state) => DistanceScreen(
                         id: state.pathParameters['id']!,
@@ -65,6 +73,22 @@ GoRouter createRouter({String initialLocation = '/login'}) => GoRouter(
                   path: ':id',
                   builder: (context, state) =>
                       TransferScreen(id: state.pathParameters['id']!),
+                  routes: [
+                    GoRoute(
+                      path: 'offer',
+                      builder: (context, state) => TripFormScreen(
+                        id: state.pathParameters['id']!,
+                        driver: true,
+                      ),
+                    ),
+                    GoRoute(
+                      path: 'request',
+                      builder: (context, state) => TripFormScreen(
+                        id: state.pathParameters['id']!,
+                        driver: false,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
