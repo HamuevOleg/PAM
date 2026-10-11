@@ -26,3 +26,14 @@ New original vector drawings: Iași Palace of Culture, Bucharest Romanian Athena
 Landmark identification references:
 - Iași destination guide, Palace of Culture: https://destinationiasi.ro/places/palace-of-culture-2/
 - George Enescu Philharmonic, Romanian Athenaeum: https://www.filarmonicaenescu.ro/en/istoric-ateneul-roman
+
+## Lab 3 · 11 October 2026
+
+Reference studied: https://github.com/dmitriaigenkiv/samepace, main
+438e942d9ebe0437840421ee5be6c604b75dfd86. The warm light palette and dark lime
+accent, runner passport composition, and participation fields (distance, pace,
+visibility) inform the Flutter adaptation. New forms and routing are implemented
+with native Flutter widgets. No Vue source, Worker backend, credentials or
+production configuration from the private reference repository are included.
+The Lab 2 artwork remains. Lab 3 validates local input without persistence or
+real authentication, event registration or booking.

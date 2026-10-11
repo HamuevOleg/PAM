@@ -40,6 +40,9 @@ jobs:
           cache: true
       - run: flutter pub get --enforce-lockfile
       - run: dart format --output=none --set-exit-if-changed lib test
+      - name: Format integration scenarios
+        if: matrix.project == 'Lab2/run_baza'
+        run: dart format --output=none --set-exit-if-changed integration_test test_driver
       - run: flutter analyze --fatal-infos
       - run: flutter test
       - name: Dart exercises
