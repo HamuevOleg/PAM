@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'screens/home_screen.dart';
+import 'package:go_router/go_router.dart';
+
+import 'router.dart';
 
 void main() => runApp(const RunBazaApp());
 
@@ -160,15 +162,27 @@ ThemeData buildTheme(Brightness brightness) {
   );
 }
 
-class RunBazaApp extends StatelessWidget {
-  const RunBazaApp({super.key});
+class RunBazaApp extends StatefulWidget {
+  final GoRouter? router;
+  const RunBazaApp({super.key, this.router});
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  State<RunBazaApp> createState() => _RunBazaAppState();
+}
+
+class _RunBazaAppState extends State<RunBazaApp> {
+  late final GoRouter _router = widget.router ?? createRouter();
+  @override
+  void dispose() {
+    if (widget.router == null) _router.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => MaterialApp.router(
     title: 'RunBaza',
     debugShowCheckedModeBanner: false,
     theme: buildTheme(Brightness.light),
     darkTheme: buildTheme(Brightness.dark),
-    themeMode: ThemeMode.system,
-    home: const HomeScreen(),
+    routerConfig: _router,
   );
 }
