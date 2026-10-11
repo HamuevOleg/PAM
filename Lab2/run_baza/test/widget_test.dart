@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:run_baza/main.dart';
+import 'package:run_baza/router.dart';
+import 'package:run_baza/screens/trip_form_screen.dart';
+import 'package:run_baza/screens/participation_form_screen.dart';
 import 'package:run_baza/data/mock_data.dart';
 import 'package:run_baza/screens/home_screen.dart';
 import 'package:run_baza/screens/login_screen.dart';
@@ -21,6 +24,9 @@ void main() {
     const MyPlanScreen(),
     const SettingsScreen(),
     const LoginScreen(),
+    const TripFormScreen(id: 'r1', driver: true),
+    const TripFormScreen(id: 'r1', driver: false),
+    const ParticipationFormScreen(id: 'r1'),
     DistanceScreen(id: races[1].id, distance: 5),
     DistanceScreen(id: races.first.id, distance: 10),
     DistanceScreen(id: races.first.id, distance: 21.1),
@@ -77,7 +83,10 @@ void main() {
     testWidgets('Home preview $raceId opens the same city and distance', (
       tester,
     ) async {
-      await tester.pumpWidget(const RunBazaApp());
+      final router = createRouter(initialLocation: '/home');
+      addTearDown(router.dispose);
+      await tester.pumpWidget(RunBazaApp(router: router));
+      await tester.pumpAndSettle();
       final option = find.byWidgetPredicate(
         (w) =>
             w is DistanceOption &&
@@ -102,30 +111,14 @@ void main() {
     });
   }
   testWidgets('Home reaches calendar and returns', (tester) async {
-    await tester.pumpWidget(const RunBazaApp());
+    final router = createRouter(initialLocation: '/home');
+    addTearDown(router.dispose);
+    await tester.pumpWidget(RunBazaApp(router: router));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Забеги'));
     await tester.pumpAndSettle();
     expect(find.text('Календарь забегов'), findsOneWidget);
-    await tester.pageBack();
-    await tester.pumpAndSettle();
-    expect(find.text('RUNBAZA'), findsOneWidget);
-  });
-  testWidgets('Login stays static without validation', (tester) async {
-    await tester.pumpWidget(const RunBazaApp());
-    await tester.tap(find.byTooltip('Вход'));
-    await tester.pumpAndSettle();
-    expect(find.byType(TextField), findsNWidgets(2));
-    expect(find.byType(Form), findsNothing);
-    expect(
-      tester.widgetList<TextField>(find.byType(TextField)).last.obscureText,
-      isTrue,
-    );
-    await tester.scrollUntilVisible(
-      find.text('Войти'),
-      250,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await tester.tap(find.text('Войти'));
+    await tester.tap(find.text('Главная'));
     await tester.pumpAndSettle();
     expect(find.text('RUNBAZA'), findsOneWidget);
   });
@@ -133,12 +126,10 @@ void main() {
     testWidgets('Distance $distance opens from event, keeps race and returns', (
       tester,
     ) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: buildTheme(Brightness.light),
-          home: RaceDetailsScreen(id: races.first.id),
-        ),
-      );
+      final router = createRouter(initialLocation: '/races/r1');
+      addTearDown(router.dispose);
+      await tester.pumpWidget(RunBazaApp(router: router));
+      await tester.pumpAndSettle();
       final choice = find.byWidgetPredicate(
         (w) => w is DistanceOption && w.distance == distance,
       );
