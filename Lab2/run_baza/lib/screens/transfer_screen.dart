@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../data/mock_data.dart';
+import 'not_found_screen.dart';
 import '../widgets/design.dart';
 import '../widgets/event_glyph.dart';
 
 class TransferScreen extends StatelessWidget {
-  final Race race;
-  const TransferScreen({super.key, required this.race});
+  final String id;
+  const TransferScreen({super.key, required this.id});
   @override
   Widget build(BuildContext context) {
+    final race = findRace(id);
+    if (race == null) return const NotFoundScreen();
     final t = Theme.of(context);
     final s = t.colorScheme;
     final drivers = offers.where((o) => o.raceId == race.id).toList();
