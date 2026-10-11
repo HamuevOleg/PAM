@@ -1,0 +1,20 @@
+RunBaza L3 — verification, 2026-10-11
+Code revision: 88d4d6c (lab/3-navigation-forms)
+Flutter 3.47.0 / Dart 3.13
+Device: iPhone 17 Pro Simulator, iOS 26.5
+
+flutter analyze --fatal-infos
+No issues found.
+
+flutter test
+100 tests passed.
+
+flutter drive --driver=test_driver/lab3_driver.dart --target=integration_test/lab3_test.dart -d <iPhone Simulator>
+All tests passed. One demonstration scenario plus framework teardown.
+19 iOS application screenshots captured into Lab3/evidence/ios.
+
+flutter build ios --simulator --debug --no-codesign
+Built build/ios/iphonesimulator/Runner.app.
+
+Report: DOCX rendered with bundled LibreOffice; all 18 pages visually inspected.
+Defense guide: PDF, all 8 pages visually inspected.
