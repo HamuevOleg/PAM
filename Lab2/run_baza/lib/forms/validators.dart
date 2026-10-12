@@ -13,6 +13,14 @@ abstract final class Validators {
   static String? password(String? value) =>
       (value ?? '').length >= 6 ? null : 'Не менее 6 символов';
 
+  static String? registrationPassword(String? value) =>
+      (value ?? '').trim().length >= 8 ? null : 'Не менее 8 символов';
+
+  static String? confirmPassword(String? value, String password) {
+    if (value == null || value.isEmpty) return 'Повторите пароль';
+    return value == password ? null : 'Пароли не совпадают';
+  }
+
   static String? phone(String? value) =>
       RegExp(r'^\+?[0-9]{8,15}$').hasMatch((value ?? '').trim())
       ? null
