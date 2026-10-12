@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../forms/validators.dart';
+import '../data/runner_identity.dart';
 import '../widgets/design.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+  final RunnerIdentity? identity;
+  const SettingsScreen({super.key, this.identity});
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _name = TextEditingController(text: 'Hamuev Oleg');
+  late final _name = TextEditingController(
+    text: widget.identity?.name ?? 'Hamuev Oleg',
+  );
   final _pace = TextEditingController(text: '6:00');
   String? _city = 'Chișinău';
   @override
@@ -81,7 +85,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ],
                       ),
                       const SizedBox(height: 18),
-                      Text('Hamuev Oleg', style: t.textTheme.headlineMedium),
+                      Text(
+                        widget.identity?.name ?? 'Hamuev Oleg',
+                        style: t.textTheme.headlineMedium,
+                      ),
+                      if (widget.identity != null) ...[
+                        const SizedBox(height: 8),
+                        Text(widget.identity!.email),
+                      ],
                       const SizedBox(height: 8),
                       const Text('Chișinău, Молдова'),
                       const SizedBox(height: 20),
