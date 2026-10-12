@@ -6,7 +6,8 @@ import '../forms/validators.dart';
 import '../widgets/event_glyph.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final ValueChanged<String>? onSignedIn;
+  const LoginScreen({super.key, this.onSignedIn});
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -107,6 +108,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         FocusScope.of(context).unfocus();
+                        widget.onSignedIn?.call(
+                          _email.text.trim().toLowerCase(),
+                        );
                         context.go('/home');
                       }
                     },
@@ -117,6 +121,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         Icon(Icons.arrow_forward, size: 20),
                       ],
                     ),
+                  ),
+                  const SizedBox(height: 12),
+                  OutlinedButton(
+                    key: const Key('login-register'),
+                    onPressed: () => context.push('/register'),
+                    child: const Text('Создать профиль'),
                   ),
                 ],
               ),
