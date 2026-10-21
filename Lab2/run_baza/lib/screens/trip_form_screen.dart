@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../data/mock_data.dart';
+import 'package:provider/provider.dart';
+
+import '../data/transfer.dart';
+import '../models/race_catalog.dart';
+import '../models/transfer_models.dart';
+import '../widgets/data_status.dart';
 import '../forms/validators.dart';
 import '../widgets/form_layout.dart';
 import 'not_found_screen.dart';
@@ -34,9 +39,18 @@ class _TripFormScreenState extends State<TripFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final race = findRace(widget.id);
+    final catalog = context.watch<RaceCatalog>();
+    final offers = context.watch<OfferModel>();
+    final requests = context.watch<RequestModel>();
+    final state = dataScreenState(context, 'Поездка', [
+      catalog,
+      widget.driver ? offers : requests,
+    ]);
+    if (state != null) return state;
+    final race = catalog.byId(widget.id);
     if (race == null) return const NotFoundScreen();
     return FormLayout(
+      isSaving: widget.driver ? offers.isSaving : requests.isSaving,
       title: widget.driver ? 'Предложить поездку' : 'Найти место',
       eyebrow: '${race.code} / ${race.city}',
       description:
@@ -133,13 +147,47 @@ class _TripFormScreenState extends State<TripFormScreen> {
           validator: Validators.phone,
         ),
       ],
-      onSubmit: () {
+      onSubmit: () async {
         if (!_formKey.currentState!.validate()) return;
+        final String? error;
+        if (widget.driver) {
+          error = await context.read<OfferModel>().add(
+            TransferOffer(
+              '',
+              widget.id,
+              _name.text.trim(),
+              _time.text.trim(),
+              _pickup.text.trim(),
+              int.parse(_seats.text),
+              int.parse(_price.text),
+              departureCity: _city!,
+              phone: _phone.text.trim(),
+            ),
+          );
+        } else {
+          error = await context.read<RequestModel>().add(
+            SeatRequest(
+              '',
+              widget.id,
+              _name.text.trim(),
+              int.parse(_seats.text),
+              _pickup.text.trim(),
+              departureCity: _city!,
+              departureTime: _time.text.trim(),
+              phone: _phone.text.trim(),
+            ),
+          );
+        }
+        if (!mounted) return;
+        if (error != null) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(error)));
+          return;
+        }
         finishForm(
           context,
-          widget.driver
-              ? 'Данные поездки проверены'
-              : 'Запрос на место проверен',
+          widget.driver ? 'Поездка добавлена' : 'Запрос добавлен',
+          destination: '/transfers/${widget.id}',
         );
       },
     );
