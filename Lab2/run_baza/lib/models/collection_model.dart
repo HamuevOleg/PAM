@@ -5,7 +5,14 @@ import '../data/repository.dart';
 import '../data/result.dart';
 
 /// Repository-backed state shared by all screens that display this collection.
-class CollectionModel<T extends Entity> extends ChangeNotifier {
+abstract interface class LoadableState {
+  bool get isLoading;
+  String? get error;
+  Future<void> load();
+}
+
+class CollectionModel<T extends Entity> extends ChangeNotifier
+    implements LoadableState {
   CollectionModel(this._repository);
   final Repository<T> _repository;
   List<T> _records = const [];
@@ -14,8 +21,10 @@ class CollectionModel<T extends Entity> extends ChangeNotifier {
   int _revision = 0;
 
   List<T> get records => List.unmodifiable(_records);
+  @override
   bool get isLoading => _loading;
   bool get isSaving => _saving;
+  @override
   String? get error => _error;
   int get count => _records.length;
   T? byId(String id) {
@@ -25,6 +34,7 @@ class CollectionModel<T extends Entity> extends ChangeNotifier {
     return null;
   }
 
+  @override
   Future<void> load() async {
     if (_disposed || _saving) return;
     final request = ++_revision;

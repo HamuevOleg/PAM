@@ -4,6 +4,20 @@ import 'package:go_router/go_router.dart';
 
 import 'router.dart';
 
+import 'package:provider/provider.dart';
+
+import 'data/mock_repositories.dart';
+import 'data/race_repository.dart';
+import 'data/plan_repository.dart';
+import 'data/offer_repository.dart';
+import 'data/request_repository.dart';
+import 'data/profile_repository.dart';
+import 'data/runner_profile.dart';
+import 'models/race_catalog.dart';
+import 'models/plan_model.dart';
+import 'models/transfer_models.dart';
+import 'models/profile_model.dart';
+
 void main() => runApp(const RunBazaApp());
 
 // Samepace reference: warm paper/orange in light, graphite/lime in dark.
@@ -187,11 +201,88 @@ class _RunBazaAppState extends State<RunBazaApp> {
   }
 
   @override
-  Widget build(BuildContext context) => MaterialApp.router(
-    title: 'RunBaza',
-    debugShowCheckedModeBanner: false,
-    theme: buildTheme(Brightness.light),
-    darkTheme: buildTheme(Brightness.dark),
-    routerConfig: _router,
+  Widget build(BuildContext context) => RunBazaScope(
+    child: Builder(
+      builder: (context) {
+        final appearance = context.watch<ProfileModel>().profile?.appearance;
+        return MaterialApp.router(
+          title: 'RunBaza',
+          debugShowCheckedModeBanner: false,
+          theme: buildTheme(Brightness.light),
+          darkTheme: buildTheme(Brightness.dark),
+          themeMode: switch (appearance) {
+            AppAppearance.light => ThemeMode.light,
+            AppAppearance.dark => ThemeMode.dark,
+            _ => ThemeMode.system,
+          },
+          routerConfig: _router,
+        );
+      },
+    ),
+  );
+}
+
+/// The source is selected here. Screens depend only on state models.
+class RunBazaScope extends StatefulWidget {
+  final Widget child;
+  final Duration latency;
+  const RunBazaScope({
+    super.key,
+    required this.child,
+    this.latency = const Duration(milliseconds: 800),
+  });
+  @override
+  State<RunBazaScope> createState() => _RunBazaScopeState();
+}
+
+class _RunBazaScopeState extends State<RunBazaScope> {
+  final _failure = MockFailure();
+  late final _races = MockRaceRepository(_failure, latency: widget.latency);
+  late final _plan = MockPlanRepository(_failure, latency: widget.latency);
+  late final _offers = MockOfferRepository(_failure, latency: widget.latency);
+  late final _requests = MockRequestRepository(
+    _failure,
+    latency: widget.latency,
+  );
+  late final _profile = MockProfileRepository(
+    _failure,
+    latency: widget.latency,
+  );
+
+  @override
+  Widget build(BuildContext context) => MultiProvider(
+    providers: [
+      Provider<MockRaceRepository>.value(value: _races),
+      Provider<RaceRepository>.value(value: _races),
+      Provider<PlanRepository>.value(value: _plan),
+      Provider<OfferRepository>.value(value: _offers),
+      Provider<RequestRepository>.value(value: _requests),
+      Provider<ProfileRepository>.value(value: _profile),
+      ChangeNotifierProvider(
+        lazy: false,
+        create: (context) =>
+            RaceCatalog(context.read<RaceRepository>())..load(),
+      ),
+      ChangeNotifierProvider(
+        lazy: false,
+        create: (context) => PlanModel(context.read<PlanRepository>())..load(),
+      ),
+      ChangeNotifierProvider(
+        lazy: false,
+        create: (context) =>
+            OfferModel(context.read<OfferRepository>())..load(),
+      ),
+      ChangeNotifierProvider(
+        lazy: false,
+        create: (context) =>
+            RequestModel(context.read<RequestRepository>())..load(),
+      ),
+      ChangeNotifierProvider(
+        lazy: false,
+        create: (context) =>
+            ProfileModel(context.read<ProfileRepository>())..load(),
+      ),
+    ],
+    child: widget.child,
   );
 }
