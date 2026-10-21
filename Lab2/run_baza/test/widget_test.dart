@@ -5,6 +5,7 @@ import 'package:run_baza/router.dart';
 import 'package:run_baza/screens/trip_form_screen.dart';
 import 'package:run_baza/screens/participation_form_screen.dart';
 import 'package:run_baza/data/mock_data.dart';
+import 'package:run_baza/data/race.dart';
 import 'package:run_baza/screens/home_screen.dart';
 import 'package:run_baza/screens/login_screen.dart';
 import 'package:run_baza/screens/race_index_screen.dart';
@@ -15,6 +16,8 @@ import 'package:run_baza/screens/settings_screen.dart';
 import 'package:run_baza/screens/profile_form_screen.dart';
 import 'package:run_baza/screens/distance_screen.dart';
 import 'package:run_baza/widgets/distance_option.dart';
+
+Race raceById(String id) => races.firstWhere((race) => race.id == id);
 
 void main() {
   final screens = <Widget>[

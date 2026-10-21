@@ -4,15 +4,7 @@ import 'plan_entry.dart';
 import 'transfer.dart';
 import 'runner_profile.dart';
 
-// These exports keep the Lab 3 callers working during the screen migration.
-export 'race.dart';
-export 'plan_entry.dart';
-export 'transfer.dart';
-
 // Sample data: dates, prices and participants are fictional.
-const demoToday = '27.09.2026';
-const daysToNextRace = 7;
-
 const races = <Race>[
   Race(
     id: 'r1',
@@ -249,11 +241,3 @@ const runnerProfile = RunnerProfile(
   preferredDistance: 10,
   seasonGoal: 8,
 );
-
-Race raceById(String id) => races.firstWhere((r) => r.id == id);
-Race? findRace(String id) {
-  for (final race in races) {
-    if (race.id == id) return race;
-  }
-  return null;
-}
