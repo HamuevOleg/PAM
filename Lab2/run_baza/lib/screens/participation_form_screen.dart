@@ -109,7 +109,7 @@ class _ParticipationFormScreenState extends State<ParticipationFormScreen> {
           visibility: _visibility!,
         );
         final error = await model.saveForRace(draft);
-        if (!mounted) return;
+        if (!context.mounted) return;
         if (error != null) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(error)));
