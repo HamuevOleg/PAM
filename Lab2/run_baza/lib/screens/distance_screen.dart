@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../data/distance_profile.dart';
-import '../data/mock_data.dart';
+
+import 'package:provider/provider.dart';
+
+import '../data/race.dart';
+import '../models/race_catalog.dart';
+import '../widgets/data_status.dart';
 import 'not_found_screen.dart';
 import '../widgets/design.dart';
 import '../widgets/animated_route.dart';
@@ -16,7 +21,10 @@ class DistanceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final race = findRace(id);
+    final catalog = context.watch<RaceCatalog>();
+    final state = dataScreenState(context, 'Дистанция', [catalog]);
+    if (state != null) return state;
+    final race = catalog.byId(id);
     if (race == null) return const NotFoundScreen();
     if (!race.distances.contains(distance)) return const NotFoundScreen();
     final t = Theme.of(context);
