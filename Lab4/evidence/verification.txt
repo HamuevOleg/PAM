@@ -1,0 +1,26 @@
+RunBaza Lab 4 verification
+Date: 2026-10-21
+Platform: iPhone 17 Pro Simulator, iOS 26.5
+Flutter: 3.47.0
+Dart: 3.13
+
+PASS dart format lib test integration_test test_driver
+PASS flutter analyze --fatal-infos (no issues)
+PASS flutter test (125 unit/widget tests)
+PASS flutter build ios --simulator --debug --no-codesign
+PASS flutter drive --driver=test_driver/lab4_driver.dart --target=integration_test/lab4_test.dart -d 4528ABEC-4EB2-47AE-AC2A-8A5DA1F029D0
+
+The iOS integration scenario contains one demonstration test plus framework teardown.
+It captures 20 screenshots and checks loading, data, failed reads, retry, plan
+removal and restoration, cross-screen counts, profile editing, theme selection,
+failed form submission with retained input and successful creation after recovery.
+
+The 125 unit/widget tests include CRUD contracts for all five repositories,
+unique generated IDs, immutable snapshots, delayed responses, notifications,
+overlapping loads, double-submit guards, disposed models, navigation, form
+validation, shared state, failure recovery and responsive layout checks.
+
+Seed isolation: no mock_data references in lib/screens, lib/widgets or lib/models.
+Login and registration are local validation. Mock state resets on app restart.
+The older Lab 3 integration script remains a navigation regression scenario;
+this run used the dedicated Lab 4 scenario above.
