@@ -1,11 +1,11 @@
-// Лабораторная работа 1. Hamuev Oleg, CR-232.
-// Запуск: dart run exercises.dart
+// Lab 1. Hamuev Oleg, CR-232.
+// Run: dart run exercises.dart
 
-// E1: tryParse возвращает null при ошибке; ?? выбирает запасное значение.
+// E1: tryParse returns null on invalid input; ?? provides a fallback.
 int parseOrDefault(String? input, int fallback) =>
     int.tryParse(input ?? '') ?? fallback;
 
-// E2: фильтруем оценки и сворачиваем их в сумму без циклов.
+// E2: filter grades and sum them without explicit loops.
 double promotedAverage(List<int> grades) {
   final promoted = grades.where((grade) => grade >= 5);
   return promoted.isEmpty
@@ -13,14 +13,14 @@ double promotedAverage(List<int> grades) {
       : promoted.fold<int>(0, (sum, grade) => sum + grade) / promoted.length;
 }
 
-// E3: именованные параметры можно пропустить или передать по имени.
+// E3: optional named parameters can be omitted or supplied by name.
 String formatPrice(
   double amount, {
   String currency = 'MDL',
   int decimals = 2,
 }) => '${amount.toStringAsFixed(decimals)} $currency';
 
-// E4: неизменяемые поля и равенство по значениям.
+// E4: immutable fields and value equality.
 class Student {
   final String name;
   final String group;
@@ -40,7 +40,7 @@ class Student {
   int get hashCode => Object.hash(name, group);
 }
 
-// E5: общий метод добавляется разным классам через with.
+// E5: share a method between classes using a mixin.
 mixin Loggable {
   void log(String msg) => print('[$runtimeType] $msg');
 }
@@ -53,7 +53,7 @@ class AuthService with Loggable {
   void login(String username) => log('пользователь вошёл: $username');
 }
 
-// E6: ожидание Future не блокирует цикл событий Dart.
+// E6: awaiting a Future does not block the Dart event loop.
 Future<String> fetchProfile(String username) async {
   await Future<void>.delayed(const Duration(seconds: 2));
   return 'Профиль: $username, группа TI-231, решено упражнений: 42';

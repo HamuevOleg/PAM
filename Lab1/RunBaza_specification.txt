@@ -1,25 +1,29 @@
-RunBaza — календарь забегов и совместные поездки
-Собственная тема семестрового проекта. Основание: README репозитория HamuevOleg/PAM. Закрепление собственной темы подтверждает преподаватель на защите L1.
+RunBaza: race calendar and carpooling
+A custom semester project topic based on the HamuevOleg/PAM README. The instructor confirms the topic at the Lab 1 defense.
 
-Целевая аудитория
-Бегуны-любители из Молдовы и соседних городов Румынии. Приложение объединяет информацию о стартах и помогает найти попутчиков для поездки на забег за пределами Кишинёва.
+Audience
+Amateur runners in Moldova and nearby Romanian cities. The app brings race information together and helps runners find a shared ride to events outside Chisinau.
 
-Экраны
-1. Home / Board — ближайший старт, количество забегов, свободные места, максимальная дистанция, дни до старта.
-2. Race Index — забеги по сезонам; поиск и фильтры по месяцу, дистанции, городу, статусу и типу.
-3. Race Details — время, место встречи, дистанции, взнос, скидки, заметки организатора и ссылка регистрации.
-4. Transfer — предложения водителей и заявки пассажиров для выбранного забега; время, место и свободные места.
-5. My Plan — избранные забеги и личные напоминания.
-6. Settings — тема, уведомления и домашний город.
-7. Login — вход или регистрация; обязательное дополнение по условию L2.
+Screens
+1. Home / Board: next race, number of races, available seats, longest distance and days until the start.
+2. Race Index: races by season, with search and filters for month, distance, city, status and type.
+3. Race Details: start time, meeting point, distances, entry fee, discounts, organizer notes and registration link.
+4. Transfer: driver offers and passenger requests for a race, including time, pickup point and available seats.
+5. My Plan: saved races and personal reminders.
+6. Settings: theme, notifications and home city.
+7. Login: sign-in or registration, added to meet the Lab 2 requirements.
 
-Сущности
+Entities
 Race: id, code, title, date, time, city, venue, distanceFromChisinau, distances, type, status, fee, currency, discount, organizerNote, registrationUrl.
 TransferOffer: id, raceId, driverName, departureTime, pickupPoint, freeSeats, contribution. SeatRequest: id, raceId, passengerName, seats, pickupPoint.
 User: id, name, email, homeCity. PlanEntry: id, userId, raceId, reminderDays. AppSettings: themeMode, notificationsEnabled, homeCity.
 
-Этапы L2–L6
-L2 — статические экраны Material 3 и mock-данные. L3 — маршруты и валидация форм. L4 — состояние, фильтры, избранное и локальное хранение. L5 — удалённые данные и аутентификация. L6 — напоминания, проверка и завершение приложения.
+Plan for Labs 2-6
+Lab 2: static Material 3 screens and mock data.
+Lab 3: navigation and form validation.
+Lab 4: state, filters, saved races and local storage.
+Lab 5: remote data and authentication.
+Lab 6: reminders, testing and final improvements.
 
-Почему эта тема
-Тема позволяет объединить календарь спортивных событий и практическую задачу поездки на старт. Концепция табло отправлений делает статусы забегов наглядными; на её основе удобно последовательно изучать интерфейс, состояние, хранение данных и уведомления.
+Reason for choosing the topic
+The project combines a sports calendar with the practical problem of getting to a race. A departures board layout makes race statuses easy to read and provides a basis for studying UI, state, storage and notifications.
