@@ -25,11 +25,12 @@ class HomeScreen extends StatelessWidget {
     if (state != null) return state;
     final races = catalog.records;
     final offers = transfers.records;
-    if (races.isEmpty)
+    if (races.isEmpty) {
       return Scaffold(
         appBar: AppBar(title: const Text('RUNBAZA')),
         body: const Center(child: Text('В календаре пока нет забегов.')),
       );
+    }
     final next = races.first;
     final featured = races.where((r) => r.previewDistance != null).toList()
       ..sort((a, b) => a.previewDistance!.compareTo(b.previewDistance!));
