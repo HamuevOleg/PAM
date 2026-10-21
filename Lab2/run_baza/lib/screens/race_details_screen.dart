@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../data/mock_data.dart';
+import 'package:provider/provider.dart';
+
+import '../data/race.dart';
+import '../models/race_catalog.dart';
+import '../widgets/data_status.dart';
 import 'not_found_screen.dart';
 import '../widgets/design.dart';
 import '../widgets/race_motif.dart';
@@ -14,7 +18,10 @@ class RaceDetailsScreen extends StatelessWidget {
   const RaceDetailsScreen({super.key, required this.id});
   @override
   Widget build(BuildContext context) {
-    final race = findRace(id);
+    final catalog = context.watch<RaceCatalog>();
+    final state = dataScreenState(context, 'Забег', [catalog]);
+    if (state != null) return state;
+    final race = catalog.byId(id);
     if (race == null) return const NotFoundScreen();
     final t = Theme.of(context);
     final s = t.colorScheme;

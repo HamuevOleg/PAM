@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/mock_data.dart';
+import '../data/race.dart';
 import 'design.dart';
 import 'race_motif.dart';
 import 'status_badge.dart';

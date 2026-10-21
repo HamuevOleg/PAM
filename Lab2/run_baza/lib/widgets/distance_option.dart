@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/distance_profile.dart';
 import 'race_motif.dart';
-import '../data/mock_data.dart';
+import '../data/race.dart';
 import '../data/race_motif.dart';
 
 class DistanceOption extends StatelessWidget {
