@@ -40,7 +40,7 @@ class MockRepository<T extends Entity> implements Repository<T> {
   }
 
   static const _networkError =
-      'Не удалось загрузить данные. Попробуйте ещё раз.';
+      'Не удалось выполнить запрос. Попробуйте ещё раз.';
   static const _missing = 'Запись больше не существует.';
 
   @override

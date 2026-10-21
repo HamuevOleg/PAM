@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../data/plan_entry.dart';
 import '../models/race_catalog.dart';
 import '../models/plan_model.dart';
+import '../models/profile_model.dart';
 import '../widgets/data_status.dart';
 import '../forms/validators.dart';
 import '../widgets/form_layout.dart';
@@ -35,7 +36,12 @@ class _ParticipationFormScreenState extends State<ParticipationFormScreen> {
   Widget build(BuildContext context) {
     final catalog = context.watch<RaceCatalog>();
     final plan = context.watch<PlanModel>();
-    final state = dataScreenState(context, 'Мой старт', [catalog, plan]);
+    final profile = context.watch<ProfileModel>();
+    final state = dataScreenState(context, 'Мой старт', [
+      catalog,
+      plan,
+      profile,
+    ]);
     if (state != null) return state;
     final race = catalog.byId(widget.id);
     if (race == null) return const NotFoundScreen();
@@ -45,6 +51,14 @@ class _ParticipationFormScreenState extends State<ParticipationFormScreen> {
         _distance = existing.distance;
         _pace.text = existing.pace;
         _visibility = existing.visibility;
+      }
+      if (existing == null && profile.profile != null) {
+        final preferences = profile.profile!;
+        _pace.text = preferences.pace;
+        _visibility = preferences.publicPlan ? 'runners' : 'private';
+        if (race.distances.contains(preferences.preferredDistance)) {
+          _distance = preferences.preferredDistance;
+        }
       }
       _initialized = true;
     }

@@ -302,7 +302,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
           ),
-          const SectionHeading('02', 'Скоро на старте'),
+          const SectionHeading('02', 'В твоём плане'),
           if (entries.isEmpty)
             ListTile(
               contentPadding: EdgeInsets.zero,

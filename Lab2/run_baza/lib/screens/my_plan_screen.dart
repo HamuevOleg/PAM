@@ -25,6 +25,12 @@ class MyPlanScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Мой план'),
+        bottom: model.isSaving
+            ? const PreferredSize(
+                preferredSize: Size.fromHeight(2),
+                child: LinearProgressIndicator(minHeight: 2),
+              )
+            : null,
         actions: [
           IconButton(
             tooltip: 'Обновить план',
