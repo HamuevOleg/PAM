@@ -1,0 +1,30 @@
+df5c9da Lab 4: document state ownership and the iOS demonstration
+dd4ba6e Lab 4: verify cross-screen updates and error recovery on iOS
+5bd2709 Lab 4: reuse profile defaults and show pending plan changes
+a9f462b Lab 4: keep seed data inside mock repositories
+be87421 Lab 4: update form and layout tests for repository-backed screens
+c5a6ab5 Lab 4: redesign the runner profile and save personal preferences
+6637182 Lab 4: guard form callbacks after asynchronous writes
+22c27b7 Lab 4: create driver offers and passenger requests from forms
+4a63ae3 Lab 4: load the transfer directory through the catalog
+a2a907a Lab 4: save participation forms through the plan repository
+f29076b Lab 4: share plan counts and confirm removal across screens
+bcb3eee Lab 4: read distance pages through the catalog model
+b8cf8c3 Lab 4: read race details through the catalog model
+7747520 Lab 4: add catalog loading, errors and retry
+7aea7e2 Lab 4: load the home screen from shared repository state
+d2de5c0 Lab 4: provide shared models above the router and add retry views
+ae8a5de Lab 4: model shared state with loading and mutation notifications
+2ac43da Lab 4: add repository contracts and delayed mock CRUD
+22a5300 Lab 4: add provider dependency
+03c3974 Use English in lab documentation and code comments
+cdc6c65 Lab 3: add registration form and session profile
+f55bdd8 Lab 3: add Word and PDF reports, defense guide, and iOS screenshots
+8f003bc Lab 3: keep all form fields mounted while scrolling
+cf74c2a Lab 3: scroll long forms in the iPhone integration scenario
+3997ef0 Lab 3: add navigation and form tests, iOS scenarios, and launch guide
+4f33fc4 Lab 3: add validated forms, profile editing, and logout confirmation
+4eab849 Lab 3: add five independent StatefulShellRoute tabs
+5c420fe Lab 3: define routes and ID-based navigation
+6ffd49a Lab 3: add go_router dependency
+c2b88af Add Lab 2: RunBaza interface and animated distance screens
