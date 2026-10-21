@@ -7,6 +7,7 @@ import 'package:run_baza/widgets/race_motif.dart';
 
 import 'package:run_baza/data/race_motif.dart';
 import 'package:run_baza/data/mock_data.dart';
+import 'package:run_baza/data/race.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
