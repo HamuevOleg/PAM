@@ -83,13 +83,7 @@ void main() {
       await tester.tap(find.text('Профиль').last);
       await tester.pumpAndSettle();
       expect(find.text('runner@example.com'), findsOneWidget);
-      expect(
-        tester
-            .widget<TextFormField>(find.byKey(const Key('profile-name')))
-            .controller!
-            .text,
-        'Test Runner',
-      );
+      expect(find.text('Test Runner'), findsOneWidget);
     },
   );
 

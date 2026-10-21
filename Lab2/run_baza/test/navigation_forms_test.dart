@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:run_baza/main.dart';
 import 'package:run_baza/router.dart';
 import 'package:run_baza/forms/validators.dart';
-import 'package:run_baza/data/mock_data.dart';
+import 'package:provider/provider.dart';
+import 'package:run_baza/models/transfer_models.dart';
+import 'package:run_baza/models/plan_model.dart';
 import 'package:run_baza/screens/race_details_screen.dart';
 
 Future<GoRouter> launch(WidgetTester tester, String location) async {
@@ -15,11 +17,19 @@ Future<GoRouter> launch(WidgetTester tester, String location) async {
   final router = createRouter(initialLocation: location);
   addTearDown(router.dispose);
   await tester.pumpWidget(RunBazaApp(router: router));
+  await tester.pump(const Duration(seconds: 1));
   await tester.pumpAndSettle();
   return router;
 }
 
 Future<void> tapVisible(WidgetTester tester, Finder finder) async {
+  if (finder.evaluate().isEmpty) {
+    await tester.scrollUntilVisible(
+      finder,
+      400,
+      scrollable: find.byType(Scrollable).last,
+    );
+  }
   await tester.ensureVisible(finder);
   await tester.pumpAndSettle();
   await tester.tap(finder);
@@ -161,11 +171,14 @@ void main() {
   }
   for (final driver in [true, false]) {
     testWidgets(
-      'Trip form driver=$driver rejects errors, accepts valid values without adding data',
+      'Trip form driver=$driver rejects errors, writes valid values through the repository',
       (tester) async {
         final path = '/transfers/r1/${driver ? 'offer' : 'request'}';
         final router = await launch(tester, path);
-        final count = offers.length + requests.length;
+        final context = tester.element(find.byKey(const Key('submit-form')));
+        final offers = context.read<OfferModel>();
+        final requests = context.read<RequestModel>();
+        final count = offers.count + requests.count;
         await tapVisible(tester, find.byKey(const Key('submit-form')));
         expect(router.routeInformationProvider.value.uri.path, path);
         expect(find.text('От 1 до 8 мест'), findsOneWidget);
@@ -179,34 +192,48 @@ void main() {
         await tapVisible(tester, find.byKey(const Key('submit-form')));
         expect(router.routeInformationProvider.value.uri.path, '/transfers/r1');
         expect(find.byType(SnackBar), findsOneWidget);
-        expect(offers.length + requests.length, count);
+        expect(offers.count + requests.count, count + 1);
+        if (driver) {
+          expect(offers.records.last.phone, '+37360000000');
+          expect(offers.records.last.driverName, 'Test Runner');
+        } else {
+          expect(requests.records.last.phone, '+37360000000');
+          expect(requests.records.last.departureTime, '06:30');
+        }
       },
     );
   }
-  testWidgets('Participation requires distance, pace and visibility', (
+  testWidgets('Participation edits a saved entry after validating its fields', (
     tester,
   ) async {
     final router = await launch(tester, '/races/r1/participate');
+    final model = tester
+        .element(find.byKey(const Key('submit-form')))
+        .read<PlanModel>();
+    final before = model.count;
+    await fill(tester, 'run-pace', '');
     await tapVisible(tester, find.byKey(const Key('submit-form')));
-    expect(find.text('Выберите дистанцию'), findsOneWidget);
-    expect(find.text('Выберите видимость'), findsOneWidget);
+    expect(find.text(Validators.pace('')!), findsOneWidget);
     await select(tester, 'run-distance', '21.1 км');
     await fill(tester, 'run-pace', '6:00');
     await select(tester, 'run-visibility', 'Только мне');
     await tapVisible(tester, find.byKey(const Key('submit-form')));
     expect(router.routeInformationProvider.value.uri.path, '/races/r1');
-    expect(find.text('Параметры старта проверены'), findsOneWidget);
+    expect(find.text('Старт сохранён в плане'), findsOneWidget);
+    expect(model.count, before);
+    expect(model.forRace('r1')!.distance, 21.1);
   });
   testWidgets('Profile validation and logout: cancel, dismiss, confirm', (
     tester,
   ) async {
-    final router = await launch(tester, '/profile');
+    final router = await launch(tester, '/profile/edit');
     await fill(tester, 'profile-name', '');
     await tapVisible(tester, find.byKey(const Key('profile-submit')));
     expect(find.text('Введите от 2 до 60 символов'), findsOneWidget);
     await fill(tester, 'profile-name', 'Test Runner');
     await tapVisible(tester, find.byKey(const Key('profile-submit')));
-    expect(find.text('Данные профиля проверены'), findsOneWidget);
+    expect(find.text('Профиль сохранён'), findsOneWidget);
+    expect(find.text('Test Runner'), findsOneWidget);
     await tester.pump(const Duration(seconds: 5));
     await tapVisible(tester, find.byKey(const Key('logout')));
     await tester.tap(find.text('Остаться'));
