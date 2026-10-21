@@ -4,9 +4,9 @@ import '../data/transfer.dart';
 import 'collection_model.dart';
 
 class OfferModel extends CollectionModel<TransferOffer> {
-  OfferModel(OfferRepository repository) : super(repository);
+  OfferModel(OfferRepository super.repository);
 }
 
 class RequestModel extends CollectionModel<SeatRequest> {
-  RequestModel(RequestRepository repository) : super(repository);
+  RequestModel(RequestRepository super.repository);
 }

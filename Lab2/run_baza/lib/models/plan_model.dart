@@ -3,7 +3,7 @@ import '../data/plan_repository.dart';
 import 'collection_model.dart';
 
 class PlanModel extends CollectionModel<PlanEntry> {
-  PlanModel(PlanRepository repository) : super(repository);
+  PlanModel(PlanRepository super.repository);
 
   PlanEntry? forRace(String raceId) {
     for (final entry in records) {

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../data/mock_data.dart';
+import 'package:provider/provider.dart';
+
+import '../data/race.dart';
+import '../models/race_catalog.dart';
+import '../models/transfer_models.dart';
+import '../widgets/data_status.dart';
 import '../widgets/design.dart';
 import '../widgets/race_motif.dart';
 import '../widgets/distance_option.dart';
@@ -14,7 +19,20 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = Theme.of(context);
     final s = t.colorScheme;
+    final catalog = context.watch<RaceCatalog>();
+    final transfers = context.watch<OfferModel>();
+    final state = dataScreenState(context, 'RUNBAZA', [catalog, transfers]);
+    if (state != null) return state;
+    final races = catalog.records;
+    final offers = transfers.records;
+    if (races.isEmpty)
+      return Scaffold(
+        appBar: AppBar(title: const Text('RUNBAZA')),
+        body: const Center(child: Text('В календаре пока нет забегов.')),
+      );
     final next = races.first;
+    final featured = races.where((r) => r.previewDistance != null).toList()
+      ..sort((a, b) => a.previewDistance!.compareTo(b.previewDistance!));
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -45,172 +63,185 @@ class HomeScreen extends StatelessWidget {
           child: Divider(),
         ),
       ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(22, 26, 22, 12),
-        children: [
-          Row(
-            children: [
-              Container(width: 6, height: 6, color: s.tertiary),
-              const SizedBox(width: 8),
-              const Expanded(child: Eyebrow('МОЛДОВА + РУМЫНИЯ / 26–27')),
-              const Eyebrow('RU'),
-            ],
-          ),
-          const SizedBox(height: 22),
-          Text('ТВОЙ СЛЕДУЮЩИЙ', style: t.textTheme.displaySmall),
-          Text(
-            'СТАРТ.',
-            style: t.textTheme.displaySmall?.copyWith(color: s.primary),
-          ),
-          const SizedBox(height: 14),
-          Text(
-            'Ближе к бегу. Ближе друг к другу.',
-            style: t.textTheme.bodyLarge?.copyWith(color: s.onSurfaceVariant),
-          ),
-          const SizedBox(height: 25),
-          Row(
-            children: [
-              const Expanded(child: Metric('08', 'забегов в календаре')),
-              Expanded(
-                child: Metric(
-                  '${offers.fold<int>(0, (n, o) => n + o.freeSeats)}',
-                  'мест в попутках',
-                ),
-              ),
-              const Icon(Icons.south_east, size: 30),
-            ],
-          ),
-          const SectionHeading('01', 'Ближайший старт'),
-          CutPanel(
-            color: s.surfaceContainerHighest,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await Future.wait([
+            context.read<RaceCatalog>().load(),
+            context.read<OfferModel>().load(),
+          ]);
+        },
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(22, 26, 22, 12),
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    Expanded(child: Eyebrow('${next.code} / TRAIL')),
-                    const Eyebrow('ЧЕРЕЗ 7 ДНЕЙ'),
-                  ],
+                Container(width: 6, height: 6, color: s.tertiary),
+                const SizedBox(width: 8),
+                const Expanded(child: Eyebrow('МОЛДОВА + РУМЫНИЯ / 26–27')),
+                const Eyebrow('RU'),
+              ],
+            ),
+            const SizedBox(height: 22),
+            Text('ТВОЙ СЛЕДУЮЩИЙ', style: t.textTheme.displaySmall),
+            Text(
+              'СТАРТ.',
+              style: t.textTheme.displaySmall?.copyWith(color: s.primary),
+            ),
+            const SizedBox(height: 14),
+            Text(
+              'Ближе к бегу. Ближе друг к другу.',
+              style: t.textTheme.bodyLarge?.copyWith(color: s.onSurfaceVariant),
+            ),
+            const SizedBox(height: 25),
+            Row(
+              children: [
+                Expanded(
+                  child: Metric(
+                    '${races.length}'.padLeft(2, '0'),
+                    'забегов в календаре',
+                  ),
                 ),
-                const SizedBox(height: 20),
-                Text(next.title, style: t.textTheme.headlineMedium),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                Expanded(
+                  child: Metric(
+                    '${offers.fold<int>(0, (n, o) => n + o.freeSeats)}',
+                    'мест в попутках',
+                  ),
+                ),
+                const Icon(Icons.south_east, size: 30),
+              ],
+            ),
+            const SectionHeading('01', 'Ближайший старт'),
+            CutPanel(
+              color: s.surfaceContainerHighest,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(child: Eyebrow('${next.code} / ${next.type}')),
+                      Eyebrow(next.date),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Text(next.title, style: t.textTheme.headlineMedium),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              next.date.split('.').first,
+                              style: t.textTheme.displaySmall?.copyWith(
+                                fontSize: 66,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Eyebrow('${next.date.substring(3)} / ${next.time}'),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: RaceEmblem(
+                          motif: motifForRace(next),
+                          height: 135,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                  const SizedBox(height: 16),
+                  Text(
+                    '${next.city} · ${next.distanceLabel} км',
+                    style: t.textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 8),
+                  StatusBadge(status: next.status),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton(
+                      onPressed: () => context.push('/races/${next.id}'),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(child: Text('Открыть забег')),
+                          Icon(Icons.arrow_outward, size: 19),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            InkWell(
+              onTap: () => context.push('/transfers/${next.id}'),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Row(
                   children: [
-                    Expanded(
+                    Icon(Icons.directions_car_outlined, color: s.primary),
+                    const SizedBox(width: 12),
+                    const Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '04',
-                            style: t.textTheme.displaySmall?.copyWith(
-                              fontSize: 66,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            'На старт — вместе',
+                            style: TextStyle(fontWeight: FontWeight.w700),
                           ),
-                          const Eyebrow('ОКТЯБРЯ / 09:00'),
+                          Text('Попутчики из Кишинёва'),
                         ],
                       ),
                     ),
-                    Expanded(
-                      child: RaceEmblem(motif: motifForRace(next), height: 135),
-                    ),
+                    const Icon(Icons.arrow_forward, size: 20),
                   ],
                 ),
-                const Divider(),
-                const SizedBox(height: 16),
-                Text(
-                  'Trebujeni · 10 / 21.1 км',
-                  style: t.textTheme.titleMedium,
-                ),
-                const SizedBox(height: 8),
-                StatusBadge(status: next.status),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton(
-                    onPressed: () => context.push('/races/${next.id}'),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(child: Text('Открыть забег')),
-                        Icon(Icons.arrow_outward, size: 19),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          InkWell(
-            onTap: () => context.push('/transfers/${next.id}'),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Row(
-                children: [
-                  Icon(Icons.directions_car_outlined, color: s.primary),
-                  const SizedBox(width: 12),
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'На старт — вместе',
-                          style: TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                        Text('Попутчики из Кишинёва'),
-                      ],
-                    ),
-                  ),
-                  const Icon(Icons.arrow_forward, size: 20),
-                ],
               ),
             ),
-          ),
-          const SectionHeading('02', 'Города и дистанции'),
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final width = MediaQuery.textScalerOf(context).scale(14) > 20
-                  ? constraints.maxWidth
-                  : (constraints.maxWidth - 12) / 2;
-              return Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                children: [
-                  for (final (race, d) in [
-                    (raceById('r4'), 5.0),
-                    (raceById('r3'), 10.0),
-                    (raceById('r1'), 21.1),
-                    (raceById('r7'), 42.2),
-                  ])
-                    SizedBox(
-                      width: width,
-                      child: DistanceOption(
-                        race: race,
-                        distance: d,
-                        onTap: () =>
-                            context.push('/races/${race.id}/distance/$d'),
+            const SectionHeading('02', 'Города и дистанции'),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final width = MediaQuery.textScalerOf(context).scale(14) > 20
+                    ? constraints.maxWidth
+                    : (constraints.maxWidth - 12) / 2;
+                return Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: [
+                    for (final race in featured)
+                      SizedBox(
+                        width: width,
+                        child: DistanceOption(
+                          race: race,
+                          distance: race.previewDistance!,
+                          onTap: () => context.push(
+                            '/races/${race.id}/distance/${race.previewDistance!}',
+                          ),
+                        ),
                       ),
-                    ),
-                ],
-              );
-            },
-          ),
-          SectionHeading(
-            '03',
-            'Календарь',
-            trailing: TextButton(
-              onPressed: () => context.go('/races'),
-              child: const Text('Все 8 →'),
+                  ],
+                );
+              },
             ),
-          ),
-          for (final race in races)
-            RaceCard(
-              race: race,
-              onTap: () => context.push('/races/${race.id}'),
+            SectionHeading(
+              '03',
+              'Календарь',
+              trailing: TextButton(
+                onPressed: () => context.go('/races'),
+                child: Text('Все ${races.length}'),
+              ),
             ),
-        ],
+            for (final race in races)
+              RaceCard(
+                race: race,
+                onTap: () => context.push('/races/${race.id}'),
+              ),
+          ],
+        ),
       ),
     );
   }
