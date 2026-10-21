@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../data/mock_data.dart';
+import 'package:provider/provider.dart';
+
+import '../data/race.dart';
+import '../models/race_catalog.dart';
+import '../widgets/data_status.dart';
 import '../widgets/design.dart';
 import '../widgets/race_card.dart';
 
@@ -22,6 +26,10 @@ class _RaceIndexScreenState extends State<RaceIndexScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final catalog = context.watch<RaceCatalog>();
+    final state = dataScreenState(context, 'Календарь забегов', [catalog]);
+    if (state != null) return state;
+    final races = catalog.records;
     final query = _search.text.trim().toLowerCase();
     final visible = races
         .where(
@@ -33,7 +41,17 @@ class _RaceIndexScreenState extends State<RaceIndexScreen> {
         )
         .toList();
     return Scaffold(
-      appBar: AppBar(title: const Text('Календарь забегов')),
+      appBar: AppBar(
+        title: const Text('Календарь забегов'),
+        actions: [
+          IconButton(
+            key: const Key('reload-races'),
+            tooltip: 'Обновить',
+            onPressed: () => context.read<RaceCatalog>().load(),
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
+      ),
       body: ListView(
         key: const PageStorageKey('race-list'),
         padding: const EdgeInsets.all(22),
