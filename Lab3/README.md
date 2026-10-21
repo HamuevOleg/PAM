@@ -1,10 +1,11 @@
-# Лабораторная 3 — RunBaza
+# Lab 3: RunBaza
 
-Навигация, формы и валидация в существующем Flutter-проекте **Lab2/run_baza**.
-Платформа демонстрации — iOS. Исходная Л2 сохранена в `lab/2-runbaza-ui`;
-работа Л3 ведётся в `lab/3-navigation-forms` и включается в `main` через PR.
+Navigation, forms and validation in the existing **Lab2/run_baza** Flutter app.
+iOS is the demonstration platform. The original Lab 2 version is preserved on
+`lab/2-runbaza-ui`. Lab 3 is developed on `lab/3-navigation-forms` and merged into
+`main` through a pull request.
 
-## Запуск
+## Run
 
 ```sh
 cd Lab2/run_baza
@@ -14,49 +15,52 @@ flutter devices
 flutter run -d <simulator-id>
 ```
 
-Для Xcode откройте `Lab2/run_baza/ios/Runner.xcworkspace`, выберите Runner и
-симулятор iPhone. Код UI находится в `Lab2/run_baza/lib`.
+In Xcode, open `Lab2/run_baza/ios/Runner.xcworkspace`, select Runner and an iPhone
+simulator. UI code is in `Lab2/run_baza/lib`.
 
-Вход принимает любой синтаксически корректный e-mail и пароль от 6 символов,
-например `runner@example.com` / `runbaza26`. Это локальная проверка формы,
-без аккаунта, сервера и сохранения пароля.
+Login accepts a syntactically valid email and a password of at least 6 characters,
+for example `runner@example.com` / `runbaza26`. This validates the local form;
+it does not check a server account or save the password.
 
-## Реализовано
+## Features
 
-- `go_router`, `MaterialApp.router`, маршруты по строковому ID.
-- Пять независимых вкладок `StatefulShellRoute.indexedStack` и `NavigationBar`.
-- Поиск по названию, городу и дистанциям; фильтр страны.
-- Формы входа, регистрации, участия в забеге, поездки водителя, запроса пассажира и профиля.
-- `Form`, `GlobalKey<FormState>`, validators, controllers с `dispose`, фильтры ввода.
-- `SnackBar` после проверки; `AlertDialog<bool>` перед выходом.
-- Обработка неизвестных путей, ID и дистанций.
-- Светлая и тёмная темы, иллюстрации городов и анимации из Л2.
+- `go_router`, `MaterialApp.router` and routes with string IDs.
+- Five independent tabs using `StatefulShellRoute.indexedStack` and `NavigationBar`.
+- Search by name, city and distance, plus a country filter.
+- Forms for login, race participation, driver offers, passenger requests and profile editing.
+- `Form`, `GlobalKey<FormState>`, validators, input filters and controllers with `dispose`.
+- `SnackBar` after validation and `AlertDialog<bool>` before logout.
+- Handling of unknown paths, IDs and distances.
+- Light and dark themes, city artwork and animations from Lab 2.
 
-Данные фиксированы. Отправка формы не создаёт запись, не бронирует место и
-не отправляет запрос в сеть. Персистентность и реальная авторизация — следующий этап.
+Race and transfer data is fixed. Submitting these forms does not create a database
+record, book a seat or send a network request. Persistence and backend authentication
+are planned for a later lab.
 
-## Регистрация (добавление к Л3)
+## Registration
 
-На экране входа нажмите **«Создать профиль»**. Маршрут `/register` содержит
-имя (2–60 символов), e-mail, пароль (не менее 8 символов без учёта крайних
-пробелов) и точное повторение пароля. Есть отдельные кнопки показа паролей.
-Пустые поля, неверный e-mail и несовпадающие пароли блокируют переход.
-После проверки открывается главная; имя и e-mail видны во вкладке «Профиль».
-Кнопка «Уже есть профиль? Войти» возвращает к введённым данным входа.
+From Login, select the create-profile button. The `/register` form requires a
+name of 2-60 characters, an email, a password with at least 8 characters after
+trimming outer spaces, and an exact password confirmation. Each password field
+has a visibility button. Empty fields, an invalid email or mismatched passwords
+prevent submission.
 
-Это локальный сценарий формы: серверный аккаунт не создаётся. Имя и e-mail
-живут только в памяти текущего запуска, пароль не сохраняется и не отправляется.
-Реальная проверка существования e-mail и авторизация потребуют backend.
+After validation, Home opens and the Profile tab shows the entered name and email.
+Returning to Login preserves its input. Profile data exists only in memory during
+the current session. No backend account is created; passwords are neither saved
+nor sent anywhere. Email availability checks and authentication require a backend.
 
-На защите: отправить пустую форму → заполнить поля → показать несовпадение
-паролей → исправить → открыть главную и профиль. Новые файлы:
-`lib/screens/register_screen.dart`, `lib/data/runner_identity.dart`,
+For the demo, submit an empty form, fill it in, show mismatched passwords, correct
+them, then open Home and Profile.
+
+Files: `lib/screens/register_screen.dart`, `lib/data/runner_identity.dart`,
 `test/registration_test.dart`, `integration_test/registration_test.dart`.
-Снимки дополнения: `evidence/ios/20-registration.png`,
+Additional screenshots: `evidence/ios/20-registration.png`,
 `21-registration-errors.png`, `22-registered-profile.png`.
-Отчёт и PDF-гайд от 11.10 описывают базовую Л3; это дополнение от 12.10.
+The report and PDF guide from 11 October cover the base Lab 3 submission.
+Registration was added on 12 October.
 
-## Проверки
+## Checks
 
 ```sh
 cd Lab2/run_baza
@@ -67,19 +71,21 @@ flutter drive --driver=test_driver/lab3_driver.dart \
   --target=integration_test/lab3_test.dart -d <simulator-id>
 ```
 
-107 unit/widget-тестов: валидация, стеки и состояние вкладок, ошибочные адреса,
-диалоги, анимации, ширины 320–430, обе темы, масштаб текста до 160%.
-Интеграционный сценарий на iOS сохраняет реальные снимки в `Lab3/evidence/ios`.
+107 unit/widget tests cover validation, tab stacks and state, invalid routes,
+dialogs, animations, widths from 320 to 430, both themes and text scaling up to 160%.
+The iOS integration scenario saves screenshots in `Lab3/evidence/ios`.
 
-## Документы
+## Documents
 
-- [Отчёт PDF](Reports/PAM_L3_HamuevOleg.pdf)
-- [Редактируемый отчёт Word](Reports/PAM_L3_HamuevOleg.docx)
-- [Руководство к защите PDF](Reports/PAM_L3_Guide_HamuevOleg.pdf)
+- [PDF report](Reports/PAM_L3_HamuevOleg.pdf)
+- [Editable Word report](Reports/PAM_L3_HamuevOleg.docx)
+- [PDF defense guide](Reports/PAM_L3_Guide_HamuevOleg.pdf)
 
-В отчёте: маршруты, полный router.dart, снимки всех веток, разные ID, ошибки
-форм, правила проверки, SnackBar, подтверждение выхода и история коммитов.
-В руководстве: запуск на Mac, последовательность показа, объяснение кода и вопросы.
+The report includes routes, router.dart, screenshots of all navigation branches,
+different IDs, form errors, validation rules, SnackBar, logout confirmation and
+commit history. The guide covers Mac setup, the demonstration sequence, code
+explanations and questions.
 
-Референс обновлён по Samepace (main `438e942`, 11.10.2026). UI написан на Flutter;
-Vue/Worker-код и серверные конфигурации референса не включены в этот репозиторий.
+Design reference: Samepace, main at `438e942`, 11 October 2026. The UI is written
+in Flutter. Vue/Worker source and server configuration from the reference are
+not included in this repository.
