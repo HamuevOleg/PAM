@@ -10,6 +10,7 @@ enum RaceCountry {
 }
 
 class Race implements Entity {
+  final double? previewDistance;
   final RaceCountry country;
   final RaceMotif artwork;
   String get locationLabel => '$city · ${country.label}';
@@ -24,6 +25,7 @@ class Race implements Entity {
   final String currency, discount, organizerNote, registrationUrl;
   const Race({
     required this.id,
+    this.previewDistance,
     required this.code,
     required this.title,
     required this.date,
@@ -45,6 +47,7 @@ class Race implements Entity {
   });
   Race copyWith({String? id}) => Race(
     id: id ?? this.id,
+    previewDistance: previewDistance,
     code: code,
     title: title,
     date: date,

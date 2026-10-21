@@ -4,7 +4,7 @@ import '../data/runner_profile.dart';
 import 'collection_model.dart';
 
 class ProfileModel extends CollectionModel<RunnerProfile> {
-  ProfileModel(ProfileRepository repository) : super(repository);
+  ProfileModel(ProfileRepository super.repository);
   RunnerIdentity? _identity;
 
   RunnerProfile? get profile {

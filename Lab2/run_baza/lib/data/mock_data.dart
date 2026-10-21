@@ -16,6 +16,7 @@ const daysToNextRace = 7;
 const races = <Race>[
   Race(
     id: 'r1',
+    previewDistance: 21.1,
     country: RaceCountry.moldova,
     artwork: RaceMotif.orhei,
     code: 'RB 104',
@@ -56,6 +57,7 @@ const races = <Race>[
   ),
   Race(
     id: 'r3',
+    previewDistance: 10,
     country: RaceCountry.romania,
     artwork: RaceMotif.iasiPalace,
     code: 'RB 126',
@@ -77,6 +79,7 @@ const races = <Race>[
   ),
   Race(
     id: 'r4',
+    previewDistance: 5,
     country: RaceCountry.moldova,
     artwork: RaceMotif.vineyard,
     code: 'RB 208',
@@ -137,6 +140,7 @@ const races = <Race>[
   ),
   Race(
     id: 'r7',
+    previewDistance: 42.2,
     country: RaceCountry.romania,
     artwork: RaceMotif.athenaeum,
     code: 'RB 411',
