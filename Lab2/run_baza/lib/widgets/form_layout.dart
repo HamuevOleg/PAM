@@ -8,6 +8,7 @@ class FormLayout extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final List<Widget> fields;
   final VoidCallback onSubmit;
+  final bool isSaving;
   const FormLayout({
     super.key,
     required this.title,
@@ -16,6 +17,7 @@ class FormLayout extends StatelessWidget {
     required this.formKey,
     required this.fields,
     required this.onSubmit,
+    this.isSaving = false,
   });
 
   @override
@@ -45,9 +47,15 @@ class FormLayout extends StatelessWidget {
                 ),
               FilledButton.icon(
                 key: const Key('submit-form'),
-                onPressed: onSubmit,
-                icon: const Icon(Icons.check),
-                label: const Text('Подтвердить'),
+                onPressed: isSaving ? null : onSubmit,
+                icon: isSaving
+                    ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : const Icon(Icons.check),
+                label: Text(isSaving ? 'Сохраняем...' : 'Подтвердить'),
               ),
               const SizedBox(height: 24),
             ],

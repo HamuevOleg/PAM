@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 
 import '../data/race.dart';
 import '../models/race_catalog.dart';
+import '../models/plan_model.dart';
+import '../widgets/plan_actions.dart';
 import '../widgets/data_status.dart';
 import 'not_found_screen.dart';
 import '../widgets/design.dart';
@@ -19,7 +21,9 @@ class RaceDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final catalog = context.watch<RaceCatalog>();
-    final state = dataScreenState(context, 'Забег', [catalog]);
+    final plan = context.watch<PlanModel>();
+    final entry = plan.forRace(id);
+    final state = dataScreenState(context, 'Забег', [catalog, plan]);
     if (state != null) return state;
     final race = catalog.byId(id);
     if (race == null) return const NotFoundScreen();
@@ -37,7 +41,7 @@ class RaceDetailsScreen extends StatelessWidget {
           IconButton(
             tooltip: 'Мой старт',
             onPressed: () => context.push('/races/$id/participate'),
-            icon: const Icon(Icons.bookmark_outline),
+            icon: Icon(entry == null ? Icons.bookmark_outline : Icons.bookmark),
           ),
         ],
       ),
@@ -89,6 +93,29 @@ class RaceDetailsScreen extends StatelessWidget {
           Text(race.title, style: t.textTheme.headlineLarge),
           const SizedBox(height: 14),
           StatusBadge(status: race.status),
+          if (entry != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'В твоём плане · ${entry.distance ?? "?"} км',
+                      key: const Key('race-in-plan'),
+                      style: t.textTheme.titleMedium,
+                    ),
+                  ),
+                  IconButton(
+                    key: const Key('details-remove-plan'),
+                    tooltip: 'Убрать из плана',
+                    onPressed: plan.isSaving
+                        ? null
+                        : () => removeFromPlan(context, entry),
+                    icon: const Icon(Icons.bookmark_remove_outlined),
+                  ),
+                ],
+              ),
+            ),
           const SizedBox(height: 24),
           CutPanel(
             color: s.surfaceContainerHighest,

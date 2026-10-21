@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../data/mock_data.dart';
+import 'package:provider/provider.dart';
+
+import '../data/plan_entry.dart';
+import '../models/race_catalog.dart';
+import '../models/plan_model.dart';
+import '../widgets/data_status.dart';
 import '../forms/validators.dart';
 import '../widgets/form_layout.dart';
 import 'not_found_screen.dart';
@@ -19,6 +24,7 @@ class _ParticipationFormScreenState extends State<ParticipationFormScreen> {
   final _pace = TextEditingController();
   double? _distance;
   String? _visibility;
+  bool _initialized = false;
   @override
   void dispose() {
     _pace.dispose();
@@ -27,9 +33,23 @@ class _ParticipationFormScreenState extends State<ParticipationFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final race = findRace(widget.id);
+    final catalog = context.watch<RaceCatalog>();
+    final plan = context.watch<PlanModel>();
+    final state = dataScreenState(context, 'Мой старт', [catalog, plan]);
+    if (state != null) return state;
+    final race = catalog.byId(widget.id);
     if (race == null) return const NotFoundScreen();
+    if (!_initialized) {
+      final existing = plan.forRace(widget.id);
+      if (existing != null) {
+        _distance = existing.distance;
+        _pace.text = existing.pace;
+        _visibility = existing.visibility;
+      }
+      _initialized = true;
+    }
     return FormLayout(
+      isSaving: plan.isSaving,
       title: 'Мой старт',
       eyebrow: '${race.code} / БЕЖИМ ВМЕСТЕ',
       description: '${race.title}\nВыбери дистанцию и свой комфортный темп.',
@@ -77,9 +97,25 @@ class _ParticipationFormScreenState extends State<ParticipationFormScreen> {
           validator: (v) => v == null ? 'Выберите видимость' : null,
         ),
       ],
-      onSubmit: () {
+      onSubmit: () async {
         if (!_formKey.currentState!.validate()) return;
-        finishForm(context, 'Параметры старта проверены');
+        final model = context.read<PlanModel>();
+        final existing = model.forRace(widget.id);
+        final draft = PlanEntry(
+          widget.id,
+          existing?.reminderDays ?? 2,
+          distance: _distance!,
+          pace: _pace.text.trim(),
+          visibility: _visibility!,
+        );
+        final error = await model.saveForRace(draft);
+        if (!mounted) return;
+        if (error != null) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(error)));
+          return;
+        }
+        finishForm(context, 'Старт сохранён в плане');
       },
     );
   }
