@@ -1,141 +1,115 @@
-# RunBaza — лабораторная 2, iOS
+# RunBaza: Lab 2 for iOS
 
-Статический Material 3 UI по теме из `PROJECT_SPEC.md`.
-Автор темы: Hamuev Oleg, CR-232. Преподаватель: Leah A.
+Static Material 3 screens based on `PROJECT_SPEC.md`.
+Student: Hamuev Oleg, CR-232. Instructor: Leah A.
 
-## Запуск iOS
+## Run
+
+Open Terminal in this folder, next to `pubspec.yaml`:
 
 ```sh
 open -a Simulator
 flutter pub get --enforce-lockfile
 flutter devices
-flutter run
+flutter run -d <simulator-id>
 ```
 
-Открывайте Terminal в этой папке (рядом с pubspec.yaml).
-Можно также открыть `../Run_iOS.command`.
-В Xcode открывается `ios/Runner.xcworkspace`, затем выбирается доступный симулятор iPhone и Product → Run.
+You can also run `../Run_iOS.command`. In Xcode, open
+`ios/Runner.xcworkspace`, select an iPhone simulator, then choose Run from the Product menu.
 
-## Экраны
+## Screens
 
-1. Home / Board — ближайший старт, статистика, кнопки экранов, четыре превью «Города и дистанции», список сезона.
-2. Race Index — восемь забегов по сезонам, поиск и пять фильтров.
-3. Race Details — информация о выбранном забеге и регистрация.
-4. Transfer — шесть предложений водителей и шесть заявок для Orheiul Vechi Trail.
-5. My Plan — шесть избранных событий и сроки напоминаний.
-6. Settings — город, оформление, уведомления.
-7. Login — два TextField и кнопка, без аутентификации и валидации.
-8. Distance — отдельная страница выбранной дистанции с анимированной иллюстрацией.
+1. Home / Board: the next race, statistics, four city and distance previews, and the season list.
+2. Race Index: eight races grouped by season, with search and five filter controls.
+3. Race Details: information about a selected race and its registration button.
+4. Transfer: six driver offers and six passenger requests for Orheiul Vechi Trail.
+5. My Plan: six saved events and reminder dates.
+6. Settings: city, appearance and notifications.
+7. Login: two text fields and a button, without authentication or validation.
+8. Distance: a distance page with an animated illustration.
 
-Навигация: кнопки на главной, иконка профиля в AppBar, карточки забегов, стрелка назад.
+Navigate using the home buttons, profile icon, race cards and back button.
 
-## Границы лабораторной 2
+## Lab 2 scope
 
-Экраны остаются StatelessWidget; анимацией линии управляет отдельный StatefulWidget AnimatedRoute. Данные находятся в lib/data/mock_data.dart.
-Поиск, фильтры, регистрация, запрос места, настройки и напоминания показывают внешний вид будущих функций. Данные не меняются и не сохраняются. Кнопка «Войти» просто возвращает на главную.
-Светлая/тёмная палитра следует системной теме через ThemeMode.system.
+Screens use StatelessWidget. AnimatedRoute is a separate StatefulWidget that
+controls the drawing animation. Mock data is in `lib/data/mock_data.dart`.
+Search, filters, registration, seat requests, settings and reminders show the
+layout of planned features. They do not change or save data. Login returns to Home.
+The light and dark palettes follow the system theme with ThemeMode.system.
 
-Даты, взносы, имена участников и ссылки вымышлены для учебного макета.
-Дата сценария: 27.09.2026. Ссылки example.com не ведут на реальную регистрацию.
-Графические эмблемы рисуются CustomPainter; сеть, WebView и внешние шрифты не нужны.
+Dates, fees, names and links are fictional. The scenario date is 27 September 2026.
+The example.com links do not register anyone for a race. CustomPainter draws the
+illustrations without a network connection, WebView or external fonts.
 
-## Структура
+## Source files
 
-- lib/main.dart — запуск, MaterialApp, ColorScheme.fromSeed.
-- lib/screens/ — восемь самостоятельных экранов, включая страницу выбранной дистанции.
-- lib/widgets/ — RaceCard, StatusBadge, InfoRow, CutPanel, SectionHeading, EventGlyph.
-- lib/data/ — модели и общие mock-данные.
-- test/widget_test.dart — проверки компоновки, навигации, входа и данных.
+- `lib/main.dart`: app entry point and theme.
+- `lib/screens/`: eight screens, including the distance page.
+- `lib/widgets/`: shared cards, badges, panels and illustrations.
+- `lib/data/`: models and mock data.
+- `test/`: layout, navigation, data and animation tests.
 
-## Проверки
+## Design
 
-```sh
-flutter analyze
-flutter test
-flutter build ios --simulator
-git log --oneline
-```
+Reference: https://github.com/dmitriaigenkiv/runbaza-app, commit c6ba2dd.
+The Flutter adaptation uses the cover/detail layout, cut corners, emblems,
+platform.css palettes and industrial.css typography. See `DESIGN_CREDITS.md`.
 
-История содержит отдельный коммит на каждый экран; исходный коммит репозитория сохранён.
-Локальная ветка lab2-ios. Удалённый репозиторий не изменён.
+Home is in `lib/screens/home_screen.dart`. Distance artwork is in
+`lib/widgets/race_motif.dart`. Search and filters remain mockups for Lab 2.
+No real registration or booking takes place.
 
-## Обновлённый дизайн · 28.09.2026
+## Distance pages and animation
 
-Оригинал: https://github.com/dmitriaigenkiv/runbaza-app, commit c6ba2dd.
-Перенесены композиция cover/detail, срезанные углы, графические эмблемы,
-палитры из platform.css и крупная типографика из industrial.css.
-Это нативная Flutter-адаптация оригинала под экраны и mock-данные лабораторной.
-Атрибуция: DESIGN_CREDITS.md.
+Select a preview on Home or a distance in Race Details. The page shows a cover,
+description, start details, preparation notes and a link to transfers for the
+same event. Times and fees come from that event.
 
-Проверено: flutter analyze без замечаний; 76 тестов;
-сборка для iOS Simulator. Компоновка проверяется на ширинах 320, 390 и 430,
-в светлой/тёмной теме и с масштабом текста до 160%.
+- `lib/screens/distance_screen.dart`: distance page.
+- `lib/widgets/distance_option.dart`: distance selection button.
+- `lib/data/distance_profile.dart`: distance names and descriptions.
+- `lib/widgets/animated_route.dart`: drawing with PathMetric.extractPath.
 
-Код главной: lib/screens/home_screen.dart. Общая тема: lib/main.dart.
-Графика дистанций и карточек: lib/widgets/race_motif.dart.
-Поиск и фильтры остаются макетом по требованиям L2; действия, которым нужен
-backend, пока не выполняются. Всплывающие пояснения и учебные подписи из интерфейса удалены. Реальных регистраций и бронирований нет.
+The line draws over 3.4 seconds, with a moving marker, checkpoints and a finish.
+Use the replay button to restart it. This is decorative artwork, not a GPS route.
+Only the CustomPainter repaints. iOS Reduce Motion displays the complete line
+without animation, and the ticker is disposed when the page closes.
 
-Открыть в Xcode из папки `run_baza` после `flutter pub get`:
+## Cities and countries
 
-```sh
-open ios/Runner.xcworkspace
-```
+RaceCountry and RaceMotif describe each event. `motifForRace` selects artwork
+by event rather than distance alone. Covers, previews and animations share it.
 
-## Страницы дистанций
-
-На главной выберите одно из четырёх превью или нажмите дистанцию в деталях события. Откроется страница с отдельной
-обложкой, описанием, данными старта, подготовкой и переходом к попутчикам.
-Компонент поддерживает и остальные дистанции каталога. Информация о времени
-и взносе берётся из события; отдельные неподтверждённые тарифы не добавляются.
-
-- lib/screens/distance_screen.dart — страница дистанции.
-- lib/widgets/distance_option.dart — кнопка выбора в событии.
-- lib/data/distance_profile.dart — название и описание дистанции.
-
-Проверены оба перехода 10/21.1, сохранение события при переходе в попутки,
-возврат назад, светлая/тёмная тема и крупный текст. Всего 76 тестов с учётом анимации и девяти иллюстраций и переходов из превью.
-
-## Анимация линии дистанции
-
-`lib/widgets/animated_route.dart`: плавная прорисовка через PathMetric.extractPath,
-маркер движения, промежуточные точки и финиш. 3,4 секунды, однократный запуск
-при открытии и повтор кнопкой ↻. Это декоративная линия, не GPS-маршрут.
-Перерисовывается CustomPainter, а не вся страница. iOS Reduce Motion показывает
-линию целиком без анимации. Тикер освобождается при закрытии страницы.
-Проверены прогресс, завершение, повтор, смена дистанции, Reduce Motion и dispose.
-
-## Иллюстрации по городам и странам
-
-У каждого события явно заданы страна (`RaceCountry`) и основной рисунок (`RaceMotif`).
-`motifForRace` выбирает иллюстрацию по событию, а не по одному километражу.
-Одна функция используется на обложках, в превью и анимации дистанции.
-
-| Место | Страна | Иллюстрация |
+| Location | Country | Illustration |
 | --- | --- | --- |
-| Iași | Румыния | Дворец культуры |
-| București | Румыния | Румынский Атенеум |
-| Chișinău, городской забег | Молдова | Арка; Штефан чел Маре для полумарафона |
-| Chișinău, зимний забег | Молдова | Лестница парка Valea Morilor |
-| Trebujeni | Молдова | Старый Орхей |
-| Cricova | Молдова | Виноградная лоза |
-| Lozova | Молдова | Лес Кодры |
-| Vadul lui Vodă | Молдова | Берега Днестра |
+| Iasi | Romania | Palace of Culture |
+| Bucharest | Romania | Romanian Athenaeum |
+| Chisinau, city race | Moldova | Arch; Stefan cel Mare for the half marathon |
+| Chisinau, winter race | Moldova | Valea Morilor park steps |
+| Trebujeni | Moldova | Old Orhei |
+| Cricova | Moldova | Grapevine |
+| Lozova | Moldova | Codrii forest |
+| Vadul lui Voda | Moldova | Dniester riverbanks |
 
-На главной «Города и дистанции» показывает четыре конкретных старта: Крикова 5 км,
-Яссы 10 км, Старый Орхей 21.1 км, Бухарест 42.2 км. Превью и открываемая страница
-используют одно событие. Подписи содержат город и страну.
-Все рисунки — оригинальные Flutter Path, сеть и изображения не нужны.
-Анимация и кнопка ↻ сохранены; при смене города анимация запускается заново.
-Это декоративные иллюстрации мест, не точная карта или трасса забега.
+The four Home previews show Cricova 5 km, Iasi 10 km, Old Orhei 21.1 km and
+Bucharest 42.2 km. Each preview opens the same event it displays. All drawings
+use Flutter paths. They are stylized landmarks, not measured race courses.
+Changing the city restarts the animation.
 
-Проверки охватывают страны и рисунки всех 8 событий на каждой дистанции,
-переходы из всех четырёх превью, смену рисунка при том же километраже,
-геометрию 9 иллюстраций и компоновку экранов. Всего 76 тестов.
+## Checks and environment
 
-## Среда и CI
+Flutter 3.47.0 / Dart 3.13. Add Flutter to PATH and select your simulator with
+`flutter devices`.
 
-Flutter 3.47.0 / Dart 3.13. В CI выполняются форматирование, статический анализ,
-widget-тесты и сборка iOS Simulator без подписи. Для запуска на другом Mac
-добавьте Flutter в PATH и выберите свой симулятор через `flutter devices`.
-Отчёт Word/PDF находится в `../Reports/`.
+```sh
+flutter analyze --fatal-infos
+flutter test
+flutter build ios --simulator --debug --no-codesign
+```
+
+The Lab 2 suite contains 76 tests covering navigation, all eight events, nine
+illustrations, animation progress, replay, Reduce Motion and disposal. Layout
+checks cover widths of 320, 390 and 430, both themes and text scaling up to 160%.
+CI checks formatting, analysis, tests and an unsigned iOS Simulator build.
+Reports are in `../Reports/`.
