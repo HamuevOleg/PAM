@@ -50,7 +50,7 @@ class TransferScreen extends StatelessWidget {
               children: [
                 Eyebrow('${race.date} / ${race.code}'),
                 const SizedBox(height: 14),
-                Text('Chișinău → ${race.city}', style: t.textTheme.titleLarge),
+                Text('На старт в ${race.city}', style: t.textTheme.titleLarge),
                 const SizedBox(height: 8),
                 Text(race.title),
                 const SizedBox(height: 18),

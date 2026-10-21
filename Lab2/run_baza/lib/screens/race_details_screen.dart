@@ -111,7 +111,13 @@ class RaceDetailsScreen extends StatelessWidget {
                     onPressed: plan.isSaving
                         ? null
                         : () => removeFromPlan(context, entry),
-                    icon: const Icon(Icons.bookmark_remove_outlined),
+                    icon: plan.isSaving
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Icon(Icons.bookmark_remove_outlined),
                   ),
                 ],
               ),

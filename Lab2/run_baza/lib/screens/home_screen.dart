@@ -112,7 +112,7 @@ class HomeScreen extends StatelessWidget {
                 const Icon(Icons.south_east, size: 30),
               ],
             ),
-            const SectionHeading('01', 'Ближайший старт'),
+            const SectionHeading('01', 'Старт в фокусе'),
             CutPanel(
               color: s.surfaceContainerHighest,
               child: Column(
@@ -194,7 +194,7 @@ class HomeScreen extends StatelessWidget {
                             'На старт — вместе',
                             style: TextStyle(fontWeight: FontWeight.w700),
                           ),
-                          Text('Попутчики из Кишинёва'),
+                          Text('Поездки и запросы на место'),
                         ],
                       ),
                     ),
