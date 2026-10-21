@@ -2,7 +2,7 @@
 set -e
 cd "$(dirname "$0")/hello_pam"
 if ! command -v flutter >/dev/null 2>&1; then
-  printf 'Добавьте Flutter SDK в PATH и запустите файл снова.\n'
+  printf 'Add the Flutter SDK to PATH and run this file again.\n'
   exit 1
 fi
 open -a Simulator

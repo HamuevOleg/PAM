@@ -8,8 +8,8 @@ enum RaceCountry {
   const RaceCountry(this.label, this.code);
 }
 
-// Учебные данные: даты, цены и участники вымышлены, это не афиша.
-// Фиксированная дата сценария делает отчёт воспроизводимым.
+// Sample data: dates, prices and participants are fictional.
+// A fixed scenario date keeps the report reproducible.
 const demoToday = '27.09.2026';
 const daysToNextRace = 7;
 

@@ -1,4 +1,4 @@
-RunBaza L3 — verification, 2026-10-11
+RunBaza L3 - verification, 2026-10-11
 Code revision: 88d4d6c (lab/3-navigation-forms)
 Flutter 3.47.0 / Dart 3.13
 Device: iPhone 17 Pro Simulator, iOS 26.5
