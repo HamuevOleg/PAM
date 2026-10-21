@@ -1,85 +1,17 @@
+import 'race.dart';
 import 'race_motif.dart';
+import 'plan_entry.dart';
+import 'transfer.dart';
+import 'runner_profile.dart';
 
-enum RaceCountry {
-  moldova('Молдова', 'MD'),
-  romania('Румыния', 'RO');
-
-  final String label, code;
-  const RaceCountry(this.label, this.code);
-}
+// These exports keep the Lab 3 callers working during the screen migration.
+export 'race.dart';
+export 'plan_entry.dart';
+export 'transfer.dart';
 
 // Sample data: dates, prices and participants are fictional.
-// A fixed scenario date keeps the report reproducible.
 const demoToday = '27.09.2026';
 const daysToNextRace = 7;
-
-class Race {
-  final RaceCountry country;
-  final RaceMotif artwork;
-  String get locationLabel => '$city · ${country.label}';
-  final String id, code, title, date, time, city, venue, season;
-  final int distanceFromChisinau;
-  final List<double> distances;
-  final String type, status;
-  final int fee;
-  final String currency, discount, organizerNote, registrationUrl;
-  const Race({
-    required this.id,
-    required this.code,
-    required this.title,
-    required this.date,
-    required this.time,
-    required this.city,
-    required this.country,
-    required this.artwork,
-    required this.venue,
-    required this.season,
-    required this.distanceFromChisinau,
-    required this.distances,
-    required this.type,
-    required this.status,
-    required this.fee,
-    this.currency = 'MDL',
-    required this.discount,
-    required this.organizerNote,
-    required this.registrationUrl,
-  });
-  String get distanceLabel => distances
-      .map((d) => d == d.roundToDouble() ? d.toInt().toString() : d.toString())
-      .join(' / ');
-}
-
-class TransferOffer {
-  final String id, raceId, driverName, departureTime, pickupPoint;
-  final int freeSeats, contribution;
-  const TransferOffer(
-    this.id,
-    this.raceId,
-    this.driverName,
-    this.departureTime,
-    this.pickupPoint,
-    this.freeSeats,
-    this.contribution,
-  );
-}
-
-class SeatRequest {
-  final String id, raceId, passengerName, pickupPoint;
-  final int seats;
-  const SeatRequest(
-    this.id,
-    this.raceId,
-    this.passengerName,
-    this.seats,
-    this.pickupPoint,
-  );
-}
-
-class PlanEntry {
-  final String raceId;
-  final int reminderDays;
-  const PlanEntry(this.raceId, this.reminderDays);
-}
 
 const races = <Race>[
   Race(
@@ -302,20 +234,19 @@ const plan = <PlanEntry>[
   PlanEntry('r6', 1),
   PlanEntry('r7', 14),
 ];
+
+const runnerProfile = RunnerProfile(
+  id: 'runner',
+  name: 'Hamuev Oleg',
+  email: 'oleg@example.com',
+  city: 'Chișinău',
+  pace: '6:00',
+  bio: 'Бегаю ради новых мест и хорошей компании.',
+  preferredDistance: 10,
+  seasonGoal: 8,
+);
+
 Race raceById(String id) => races.firstWhere((r) => r.id == id);
-
-// A longer Chișinău city race gets a second local landmark. Other events
-// retain their own setting at every distance, including cross-border races.
-RaceMotif motifForRace(Race race, [double? distance]) =>
-    race.country == RaceCountry.moldova &&
-        race.city == 'Chișinău' &&
-        race.artwork == RaceMotif.arch &&
-        distance != null &&
-        distance >= 20
-    ? RaceMotif.stefan
-    : race.artwork;
-
-/// External route parameters must not make firstWhere throw.
 Race? findRace(String id) {
   for (final race in races) {
     if (race.id == id) return race;
