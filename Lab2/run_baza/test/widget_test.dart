@@ -12,6 +12,7 @@ import 'package:run_baza/screens/race_details_screen.dart';
 import 'package:run_baza/screens/transfer_screen.dart';
 import 'package:run_baza/screens/my_plan_screen.dart';
 import 'package:run_baza/screens/settings_screen.dart';
+import 'package:run_baza/screens/profile_form_screen.dart';
 import 'package:run_baza/screens/distance_screen.dart';
 import 'package:run_baza/widgets/distance_option.dart';
 
@@ -23,6 +24,7 @@ void main() {
     TransferScreen(id: races.first.id),
     const MyPlanScreen(),
     const SettingsScreen(),
+    const ProfileFormScreen(),
     const LoginScreen(),
     const TripFormScreen(id: 'r1', driver: true),
     const TripFormScreen(id: 'r1', driver: false),
@@ -62,6 +64,7 @@ void main() {
               ),
             ),
           );
+          await tester.pump(const Duration(seconds: 1));
           await tester.pumpAndSettle();
           expect(tester.takeException(), isNull);
           for (var n = 0; n < 10; n++) {
