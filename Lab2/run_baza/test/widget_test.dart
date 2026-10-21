@@ -49,14 +49,16 @@ void main() {
           addTearDown(tester.view.resetPhysicalSize);
           addTearDown(tester.view.resetDevicePixelRatio);
           await tester.pumpWidget(
-            MaterialApp(
-              theme: buildTheme(brightness),
-              home: MediaQuery(
-                data: MediaQueryData(
-                  size: Size(width, 900),
-                  textScaler: TextScaler.linear(scale),
+            RunBazaScope(
+              child: MaterialApp(
+                theme: buildTheme(brightness),
+                home: MediaQuery(
+                  data: MediaQueryData(
+                    size: Size(width, 900),
+                    textScaler: TextScaler.linear(scale),
+                  ),
+                  child: screens[i],
                 ),
-                child: screens[i],
               ),
             ),
           );
