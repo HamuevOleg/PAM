@@ -6,7 +6,7 @@ import 'package:run_baza/router.dart';
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  testWidgets('Lab 3 iOS demonstration and report evidence', (tester) async {
+  testWidgets('Navigation and form regression on iOS', (tester) async {
     final router = createRouter();
     await tester.pumpWidget(RunBazaApp(router: router));
     Future<void> shot(String name) async {
@@ -79,6 +79,7 @@ void main() {
       await shot(name);
     }
     await route('/races/r1/participate');
+    await fill('run-pace', '');
     await tapKey('submit-form');
     await shot('11-run-errors');
     await choose('run-distance', '21.1 км');
@@ -104,10 +105,11 @@ void main() {
         await shot('19-driver-errors-bottom');
       }
     }
-    await route('/profile');
+    await route('/profile/edit');
     await fill('profile-name', '');
     await tapKey('profile-submit');
     await shot('16-profile-errors');
+    await route('/profile');
     await tapKey('logout');
     await shot('17-confirm-logout');
     await tester.tap(find.text('Остаться'));
