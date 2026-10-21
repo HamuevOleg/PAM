@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
+import '../models/plan_model.dart';
 
 /// Each branch owns its navigator, scroll position and local form state.
 class AppShell extends StatelessWidget {
@@ -11,24 +14,32 @@ class AppShell extends StatelessWidget {
     bottomNavigationBar: NavigationBar(
       selectedIndex: navigationShell.currentIndex,
       onDestinationSelected: navigationShell.goBranch,
-      destinations: const [
-        NavigationDestination(
+      destinations: [
+        const NavigationDestination(
           icon: Icon(Icons.grid_view_outlined),
           label: 'Главная',
         ),
-        NavigationDestination(
+        const NavigationDestination(
           icon: Icon(Icons.calendar_month_outlined),
           label: 'Забеги',
         ),
-        NavigationDestination(
+        const NavigationDestination(
           icon: Icon(Icons.directions_car_outlined),
           label: 'Попутки',
         ),
         NavigationDestination(
-          icon: Icon(Icons.bookmark_outline),
+          icon: Consumer<PlanModel>(
+            builder: (context, plan, child) => Badge(
+              key: const Key('plan-badge'),
+              isLabelVisible: plan.count > 0,
+              label: Text('${plan.count}'),
+              child: child!,
+            ),
+            child: const Icon(Icons.bookmark_outline),
+          ),
           label: 'Мой план',
         ),
-        NavigationDestination(
+        const NavigationDestination(
           icon: Icon(Icons.person_outline),
           label: 'Профиль',
         ),

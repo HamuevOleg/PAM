@@ -231,12 +231,12 @@ const requests = <SeatRequest>[
   SeatRequest('s6', 'r1', 'Olga Marin', 1, 'Chișinău · Circ'),
 ];
 const plan = <PlanEntry>[
-  PlanEntry('r1', 2),
-  PlanEntry('r2', 3),
-  PlanEntry('r3', 7),
-  PlanEntry('r4', 2),
-  PlanEntry('r6', 1),
-  PlanEntry('r7', 14),
+  PlanEntry('r1', 2, distance: 21.1),
+  PlanEntry('r2', 3, distance: 10),
+  PlanEntry('r3', 7, distance: 10),
+  PlanEntry('r4', 2, distance: 5),
+  PlanEntry('r6', 1, distance: 3),
+  PlanEntry('r7', 14, distance: 42.2),
 ];
 
 const runnerProfile = RunnerProfile(
