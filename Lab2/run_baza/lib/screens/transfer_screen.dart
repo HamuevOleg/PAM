@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../data/mock_data.dart';
+import 'package:provider/provider.dart';
+
+import '../models/race_catalog.dart';
+import '../models/transfer_models.dart';
+import '../widgets/data_status.dart';
 import 'not_found_screen.dart';
 import '../widgets/design.dart';
 import '../widgets/event_glyph.dart';
@@ -11,7 +15,18 @@ class TransferScreen extends StatelessWidget {
   const TransferScreen({super.key, required this.id});
   @override
   Widget build(BuildContext context) {
-    final race = findRace(id);
+    final catalog = context.watch<RaceCatalog>();
+    final offerModel = context.watch<OfferModel>();
+    final requestModel = context.watch<RequestModel>();
+    final state = dataScreenState(context, 'Трансфер', [
+      catalog,
+      offerModel,
+      requestModel,
+    ]);
+    if (state != null) return state;
+    final offers = offerModel.records;
+    final requests = requestModel.records;
+    final race = catalog.byId(id);
     if (race == null) return const NotFoundScreen();
     final t = Theme.of(context);
     final s = t.colorScheme;
@@ -95,6 +110,7 @@ class TransferScreen extends StatelessWidget {
             ),
           for (final driver in drivers)
             Padding(
+              key: ValueKey(driver.id),
               padding: const EdgeInsets.only(bottom: 14),
               child: CutPanel(
                 color: s.surfaceContainerLow,
@@ -142,9 +158,18 @@ class TransferScreen extends StatelessWidget {
                           style: t.textTheme.titleLarge,
                         ),
                         const SizedBox(width: 16),
-                        Expanded(child: Text(driver.pickupPoint)),
+                        Expanded(
+                          child: Text(
+                            '${driver.departureCity} · ${driver.pickupPoint}',
+                          ),
+                        ),
                       ],
                     ),
+                    if (driver.phone.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12),
+                        child: Text(driver.phone),
+                      ),
                     const SizedBox(height: 16),
                     const Divider(),
                     const SizedBox(height: 8),
@@ -175,13 +200,14 @@ class TransferScreen extends StatelessWidget {
             const Text('Пока нет запросов. Можно оставить первый.'),
           for (final passenger in passengers)
             Column(
+              key: ValueKey(passenger.id),
               children: [
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(vertical: 6),
                   leading: const Icon(Icons.person_outline),
                   title: Text(passenger.passengerName),
                   subtitle: Text(
-                    '${passenger.pickupPoint} · мест: ${passenger.seats}',
+                    '${passenger.departureCity} · ${passenger.pickupPoint} · мест: ${passenger.seats}\n${passenger.departureTime} ${passenger.phone}',
                   ),
                 ),
                 const Divider(),
