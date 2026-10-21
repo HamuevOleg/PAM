@@ -1,12 +1,14 @@
-# Лабораторная 1 — Hamuev Oleg, CR-232
+# Lab 1: Dart and Flutter for iOS
 
-- `dart_exercises/exercises.dart` — E1–E6 с примерами из задания.
-- `dart_exercises/check.dart` — дополнительные проверки.
-- `hello_pam/` — стандартное Flutter-приложение счётчика для iOS.
-- `evidence/` — снимок приложения в симуляторе.
-- `Reports/` — отчёт Word/PDF и инструкция для защиты.
+Hamuev Oleg, CR-232
 
-## Запуск
+- `dart_exercises/exercises.dart`: exercises E1-E6 from the assignment.
+- `dart_exercises/check.dart`: additional checks.
+- `hello_pam/`: the standard Flutter counter app for iOS.
+- `evidence/`: a screenshot from the simulator.
+- `Reports/`: the Word/PDF report and defense guide.
+
+## Run
 
 ```sh
 dart run dart_exercises/exercises.dart
@@ -18,18 +20,21 @@ flutter devices
 flutter run
 ```
 
-Если устройств несколько, выберите iPhone Simulator из списка или запустите `flutter run -d <device-id>`.
-В терминале Flutter: r — hot reload, R — hot restart, q — выход.
-Тема проекта: RunBaza; спецификация находится в приложении к отчёту.
+If several devices are available, select an iPhone Simulator or use
+`flutter run -d <device-id>`. In the Flutter terminal, press `r` for hot reload,
+`R` for hot restart, or `q` to quit.
 
-## Среда и проверки
+The semester project topic is RunBaza. See `RunBaza_specification.txt` and the report appendix.
 
-Flutter 3.47.0 / Dart 3.13. Для iOS нужны macOS, Xcode и iOS Simulator.
-Добавьте Flutter SDK в PATH. После `flutter pub get` можно открыть
-`hello_pam/ios/Runner.xcworkspace` в Xcode и выбрать симулятор iPhone.
+## Environment and checks
+
+Flutter 3.47.0 / Dart 3.13. iOS development requires macOS, Xcode and iOS Simulator.
+Add the Flutter SDK to PATH. After `flutter pub get`, you can open
+`hello_pam/ios/Runner.xcworkspace` in Xcode and select an iPhone simulator.
+
+From `hello_pam`:
 
 ```sh
-cd hello_pam
 flutter analyze --fatal-infos
 flutter test
 flutter build ios --simulator --debug --no-codesign

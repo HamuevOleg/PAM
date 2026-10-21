@@ -1,14 +1,14 @@
-# Лабораторная 2 — интерфейс RunBaza
+# Lab 2: RunBaza interface
 
-Hamuev Oleg · CR-232 · Leah A.
+Hamuev Oleg, CR-232. Instructor: Leah A.
 
-- [Приложение и запуск](run_baza/README.md)
-- [Отчёт Word](Reports/PAM_L2_HamuevOleg.docx)
-- [Отчёт PDF](Reports/PAM_L2_HamuevOleg.pdf)
-- [Инструкция для защиты](Reports/PAM_L2_Guide_HamuevOleg.pdf)
-- [Источники оформления](run_baza/DESIGN_CREDITS.md)
+- [App and run instructions](run_baza/README.md)
+- [Word report](Reports/PAM_L2_HamuevOleg.docx)
+- [PDF report](Reports/PAM_L2_HamuevOleg.pdf)
+- [Defense guide](Reports/PAM_L2_Guide_HamuevOleg.pdf)
+- [Design sources](run_baza/DESIGN_CREDITS.md)
 
-Основная платформа — iOS. Статические данные, навигация между экранами,
-светлая/тёмная тема, страницы дистанций и анимированные иллюстрации городов.
-Регистрация на забеги, авторизация, поиск и бронирование пока представлены
-макетом интерфейса и не обращаются к серверу.
+The primary platform is iOS. Lab 2 covers static data, screen navigation,
+light and dark themes, distance pages and animated city illustrations.
+In the Lab 2 version, race registration, login, search and booking are UI mockups
+without a backend. The original version is on `lab/2-runbaza-ui`.
