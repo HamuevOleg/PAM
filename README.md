@@ -7,6 +7,9 @@
 
 ## Topic
 
+The description below is the product plan. The current Lab 4 build uses a local
+mock repository; it does not retrieve live race information or book seats.
+
 RunBaza is a mobile application for amateur runners in Moldova and nearby Romanian cities
 (Iași, București). It collects all upcoming running races - road marathons, half marathons,
 trail runs, wine-cellar runs, night runs, charity fun runs - into a single, always up-to-date
@@ -59,10 +62,10 @@ RunBaza puts everything in one place on the runner's phone.
 
 - **Flutter** (Dart) - cross-platform UI framework, primary target **iOS**
 - **Xcode / iOS Simulator** - build and run on macOS
-- State management: Provider / Riverpod (to be decided during development)
-- Local storage: `shared_preferences` / `sqflite` for favourites and cached race data
-- Data source: JSON (local at first, remote endpoint later)
-- Notifications: `flutter_local_notifications`
+- State management: Provider and ChangeNotifier (Lab 4)
+- Current storage: in-memory repositories; disk persistence is a future step
+- Data source: typed mock repositories with asynchronous CRUD; HTTP is a future step
+- Planned notifications: `flutter_local_notifications`
 - Version control: Git / GitHub
 
 ## Origin
@@ -77,7 +80,7 @@ mobile application with offline access, notifications and interactive carpooling
 - [x] Set up Flutter project and iOS build
 - [x] UI: Home board and Race Index screens
 - [x] Race Details and Transfer screens
-- [ ] Local data layer and favourites
+- [x] In-memory repository layer and shared personal plan
 - [ ] Notifications and reminders
 - [ ] Testing, polishing, final presentation
 
@@ -89,6 +92,7 @@ mobile application with offline access, notifications and interactive carpooling
 | [Lab 1](Lab1/README.md) | Dart E1-E6, Flutter counter, iOS project, report | Ready |
 | [Lab 2](Lab2/README.md) | RunBaza UI, distance screens, animated city illustrations, report | Ready |
 | [Lab 3](Lab3/README.md) | Router, five stateful tabs, forms, validation, iOS evidence and defense guide | Ready |
+| [Lab 4](Lab4/README.md) | Shared state, repository CRUD, error recovery and redesigned profile | Ready |
 
 ## Development and CI
 
@@ -99,8 +103,9 @@ committed so local and CI dependency versions stay consistent.
 
 Work in a separate branch and open a pull request into `main`.
 
-The current app continues in `Lab2/run_baza`; Lab 3 adds navigation, local search,
-forms and validation. Login and registration validate input locally. Backend
+The current app continues in `Lab2/run_baza`. Lab 3 added navigation and forms;
+Lab 4 adds repository-backed state, working mutations and profile preferences.
+Login and registration validate input locally. Backend
 authentication, account creation, carpool booking and persistence remain planned features. Lab 2 is preserved in `lab/2-runbaza-ui`.
 
 ![RunBaza interface](Lab2/evidence/redesign-2026-09-28/preview.jpg)
