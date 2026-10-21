@@ -1,4 +1,8 @@
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
+import 'models/profile_model.dart';
+import 'screens/profile_form_screen.dart';
 
 import 'widgets/app_shell.dart';
 import 'data/runner_identity.dart';
@@ -18,7 +22,6 @@ import 'screens/settings_screen.dart';
 import 'screens/not_found_screen.dart';
 
 GoRouter createRouter({String initialLocation = '/login'}) {
-  RunnerIdentity? identity;
   return GoRouter(
     initialLocation: initialLocation,
     errorBuilder: (context, state) => const NotFoundScreen(),
@@ -27,14 +30,25 @@ GoRouter createRouter({String initialLocation = '/login'}) {
         path: '/login',
         builder: (context, state) => LoginScreen(
           onSignedIn: (email) {
-            if (identity?.email != email) identity = null;
+            final model = context.read<ProfileModel>();
+            final current = model.profile;
+            model.startSession(
+              RunnerIdentity(
+                name: current?.email == email
+                    ? current!.name
+                    : email.split('@').first,
+                email: email,
+              ),
+            );
           },
         ),
       ),
       GoRoute(
         path: '/register',
-        builder: (context, state) =>
-            RegisterScreen(onRegistered: (profile) => identity = profile),
+        builder: (context, state) => RegisterScreen(
+          onRegistered: (profile) =>
+              context.read<ProfileModel>().startSession(profile),
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
@@ -123,7 +137,13 @@ GoRouter createRouter({String initialLocation = '/login'}) {
             routes: [
               GoRoute(
                 path: '/profile',
-                builder: (context, state) => SettingsScreen(identity: identity),
+                builder: (context, state) => const SettingsScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'edit',
+                    builder: (context, state) => const ProfileFormScreen(),
+                  ),
+                ],
               ),
             ],
           ),
