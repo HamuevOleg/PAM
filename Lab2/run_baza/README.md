@@ -1,8 +1,9 @@
 # RunBaza for iOS
 
-This is the original Lab 2 Flutter project, continued in Lab 3 without copying
-or recreating the app. See [Lab 3](../../Lab3/README.md) for current routes,
-validation rules, run commands, tests and documentation. The static Lab 2 version
+This is the original Lab 2 Flutter project, continued through Lab 4 without copying
+or recreating the app. See [Lab 4](../../Lab4/README.md) for the current state layer,
+profile, run commands, tests and documentation.
+[Lab 3](../../Lab3/README.md) describes navigation and validation at that stage. The static Lab 2 version
 is available on the `lab/2-runbaza-ui` branch.
 
 ```sh
