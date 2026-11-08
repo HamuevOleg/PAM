@@ -1,16 +1,18 @@
-import 'entity.dart';
-import 'mock_data.dart' as seed;
-import 'race.dart';
-import 'plan_entry.dart';
-import 'transfer.dart';
-import 'runner_profile.dart';
-import 'repository.dart';
-import 'race_repository.dart';
-import 'plan_repository.dart';
-import 'offer_repository.dart';
-import 'request_repository.dart';
-import 'profile_repository.dart';
-import 'result.dart';
+import 'package:run_baza/data/entity.dart';
+
+import 'fixtures.dart' as seed;
+
+import 'package:run_baza/data/race.dart';
+import 'package:run_baza/data/plan_entry.dart';
+import 'package:run_baza/data/transfer.dart';
+import 'package:run_baza/data/runner_profile.dart';
+import 'package:run_baza/data/repository.dart';
+import 'package:run_baza/data/race_repository.dart';
+import 'package:run_baza/data/plan_repository.dart';
+import 'package:run_baza/data/offer_repository.dart';
+import 'package:run_baza/data/request_repository.dart';
+import 'package:run_baza/data/profile_repository.dart';
+import 'package:run_baza/data/result.dart';
 
 /// Shared only by the mock repositories and the failure demonstration control.
 class MockFailure {

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../data/mock_repositories.dart';
+import '../data/session_controller.dart';
+import '../data/result.dart';
 import '../data/runner_profile.dart';
 import '../models/profile_model.dart';
 import '../models/collection_model.dart';
@@ -19,17 +20,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _simulateError = false;
-  bool _initialized = false;
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_initialized) {
-      _simulateError = context.read<MockRaceRepository>().simulateError;
-      _initialized = true;
-    }
-  }
-
   Future<void> _savePreference(RunnerProfile profile) async {
     final error = await context.read<ProfileModel>().save(profile);
     if (!mounted || error == null) return;
@@ -57,21 +47,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
     if (!mounted || confirmed != true) return;
-    context.read<ProfileModel>().endSession();
-    context.go('/login');
+    final result = await context.read<SessionController>().logout();
+    if (!mounted) return;
+    if (result case Err(:final msg)) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+    } else {
+      context.go('/login');
+    }
   }
-
-  Widget _failureControl() => SwitchListTile.adaptive(
-    key: const Key('simulate-error'),
-    contentPadding: EdgeInsets.zero,
-    title: const Text('Симулировать сбой сети'),
-    subtitle: const Text('Проверка загрузки и сохранения'),
-    value: _simulateError,
-    onChanged: (value) {
-      setState(() => _simulateError = value);
-      context.read<MockRaceRepository>().simulateError = value;
-    },
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -99,10 +82,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         context.read<RaceCatalog>().load();
                       },
                     ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 22),
-              child: _failureControl(),
             ),
           ],
         ),
@@ -377,13 +356,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const Divider(),
           const SizedBox(height: 8),
-          ExpansionTile(
-            key: const Key('diagnostics'),
-            tilePadding: EdgeInsets.zero,
-            title: const Text('Диагностика'),
-            leading: const Icon(Icons.tune_outlined),
-            children: [_failureControl()],
-          ),
+
           const SizedBox(height: 24),
           OutlinedButton.icon(
             key: const Key('logout'),

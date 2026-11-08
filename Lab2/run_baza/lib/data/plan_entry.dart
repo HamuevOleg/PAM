@@ -1,3 +1,4 @@
+import 'json_fields.dart';
 import 'entity.dart';
 
 class PlanEntry implements Entity {
@@ -15,6 +16,23 @@ class PlanEntry implements Entity {
     this.pace = '6:00',
     this.visibility = 'private',
   }) : id = id ?? raceId;
+
+  factory PlanEntry.fromJson(Map<String, dynamic> j) => PlanEntry(
+    jsonId(j['raceId']),
+    j['reminderDays'] as int,
+    id: jsonId(j['id']),
+    distance: (j['distance'] as num?)?.toDouble(),
+    pace: j['pace'] as String,
+    visibility: j['visibility'] as String,
+  );
+
+  Map<String, Object?> toJson() => {
+    'raceId': raceId,
+    'reminderDays': reminderDays,
+    'distance': distance,
+    'pace': pace,
+    'visibility': visibility,
+  };
 
   PlanEntry copyWith({
     String? id,

@@ -1,8 +1,8 @@
-import 'race.dart';
-import 'race_motif.dart';
-import 'plan_entry.dart';
-import 'transfer.dart';
-import 'runner_profile.dart';
+import 'package:run_baza/data/race.dart';
+import 'package:run_baza/data/race_motif.dart';
+import 'package:run_baza/data/plan_entry.dart';
+import 'package:run_baza/data/transfer.dart';
+import 'package:run_baza/data/runner_profile.dart';
 
 // Sample data: dates, prices and participants are fictional.
 const races = <Race>[

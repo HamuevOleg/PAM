@@ -6,7 +6,8 @@ import 'router.dart';
 
 import 'package:provider/provider.dart';
 
-import 'data/mock_repositories.dart';
+import 'data/repositories.dart';
+import 'data/session_controller.dart';
 import 'data/race_repository.dart';
 import 'data/plan_repository.dart';
 import 'data/offer_repository.dart';
@@ -18,7 +19,12 @@ import 'models/plan_model.dart';
 import 'models/transfer_models.dart';
 import 'models/profile_model.dart';
 
-void main() => runApp(const RunBazaApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final session = SessionController();
+  await session.restore();
+  runApp(RunBazaApp(session: session));
+}
 
 // Samepace reference: warm paper/orange in light, graphite/lime in dark.
 // All screens read these semantic colours, including in iOS dark mode.
@@ -187,102 +193,121 @@ ThemeData buildTheme(Brightness brightness) {
 
 class RunBazaApp extends StatefulWidget {
   final GoRouter? router;
-  const RunBazaApp({super.key, this.router});
+  final SessionController? session;
+  final Repositories? repositories;
+  const RunBazaApp({super.key, this.router, this.session, this.repositories});
   @override
   State<RunBazaApp> createState() => _RunBazaAppState();
 }
 
 class _RunBazaAppState extends State<RunBazaApp> {
-  late final GoRouter _router = widget.router ?? createRouter();
+  late final SessionController _session = widget.session ?? SessionController();
+  late final GoRouter _router =
+      widget.router ?? createRouter(session: _session);
+  late final Repositories _repositories =
+      widget.repositories ?? Repositories.http(_session.api);
   @override
   void dispose() {
     if (widget.router == null) _router.dispose();
+    if (widget.session == null) _session.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) => RunBazaScope(
-    child: Builder(
-      builder: (context) {
-        final appearance = context.watch<ProfileModel>().profile?.appearance;
-        return MaterialApp.router(
-          title: 'RunBaza',
-          debugShowCheckedModeBanner: false,
-          theme: buildTheme(Brightness.light),
-          darkTheme: buildTheme(Brightness.dark),
-          themeMode: switch (appearance) {
-            AppAppearance.light => ThemeMode.light,
-            AppAppearance.dark => ThemeMode.dark,
-            _ => ThemeMode.system,
+  Widget build(BuildContext context) => ChangeNotifierProvider.value(
+    value: _session,
+    child: ListenableBuilder(
+      listenable: _session,
+      builder: (context, _) => RunBazaScope(
+        key: ValueKey(_session.generation),
+        repositories: _repositories,
+        load: _session.signedIn,
+        child: Builder(
+          builder: (context) {
+            final appearance = context
+                .watch<ProfileModel>()
+                .profile
+                ?.appearance;
+            return MaterialApp.router(
+              title: 'RunBaza',
+              debugShowCheckedModeBanner: false,
+              theme: buildTheme(Brightness.light),
+              darkTheme: buildTheme(Brightness.dark),
+              themeMode: switch (appearance) {
+                AppAppearance.light => ThemeMode.light,
+                AppAppearance.dark => ThemeMode.dark,
+                _ => ThemeMode.system,
+              },
+              routerConfig: _router,
+            );
           },
-          routerConfig: _router,
-        );
-      },
+        ),
+      ),
     ),
   );
 }
 
 /// The source is selected here. Screens depend only on state models.
-class RunBazaScope extends StatefulWidget {
+class RunBazaScope extends StatelessWidget {
   final Widget child;
-  final Duration latency;
+  final Repositories repositories;
+  final bool load;
   const RunBazaScope({
     super.key,
     required this.child,
-    this.latency = const Duration(milliseconds: 800),
+    required this.repositories,
+    this.load = true,
   });
-  @override
-  State<RunBazaScope> createState() => _RunBazaScopeState();
-}
-
-class _RunBazaScopeState extends State<RunBazaScope> {
-  final _failure = MockFailure();
-  late final _races = MockRaceRepository(_failure, latency: widget.latency);
-  late final _plan = MockPlanRepository(_failure, latency: widget.latency);
-  late final _offers = MockOfferRepository(_failure, latency: widget.latency);
-  late final _requests = MockRequestRepository(
-    _failure,
-    latency: widget.latency,
-  );
-  late final _profile = MockProfileRepository(
-    _failure,
-    latency: widget.latency,
-  );
 
   @override
   Widget build(BuildContext context) => MultiProvider(
     providers: [
-      Provider<MockRaceRepository>.value(value: _races),
-      Provider<RaceRepository>.value(value: _races),
-      Provider<PlanRepository>.value(value: _plan),
-      Provider<OfferRepository>.value(value: _offers),
-      Provider<RequestRepository>.value(value: _requests),
-      Provider<ProfileRepository>.value(value: _profile),
+      Provider<RaceRepository>.value(value: repositories.races),
+      Provider<PlanRepository>.value(value: repositories.plan),
+      Provider<OfferRepository>.value(value: repositories.offers),
+      Provider<RequestRepository>.value(value: repositories.requests),
+      Provider<ProfileRepository>.value(value: repositories.profile),
       ChangeNotifierProvider(
         lazy: false,
-        create: (context) =>
-            RaceCatalog(context.read<RaceRepository>())..load(),
+        create: (_) {
+          final m = RaceCatalog(repositories.races);
+          if (load) m.load();
+          return m;
+        },
       ),
       ChangeNotifierProvider(
         lazy: false,
-        create: (context) => PlanModel(context.read<PlanRepository>())..load(),
+        create: (_) {
+          final m = PlanModel(repositories.plan);
+          if (load) m.load();
+          return m;
+        },
       ),
       ChangeNotifierProvider(
         lazy: false,
-        create: (context) =>
-            OfferModel(context.read<OfferRepository>())..load(),
+        create: (_) {
+          final m = OfferModel(repositories.offers);
+          if (load) m.load();
+          return m;
+        },
       ),
       ChangeNotifierProvider(
         lazy: false,
-        create: (context) =>
-            RequestModel(context.read<RequestRepository>())..load(),
+        create: (_) {
+          final m = RequestModel(repositories.requests);
+          if (load) m.load();
+          return m;
+        },
       ),
       ChangeNotifierProvider(
         lazy: false,
-        create: (context) =>
-            ProfileModel(context.read<ProfileRepository>())..load(),
+        create: (_) {
+          final m = ProfileModel(repositories.profile);
+          if (load) m.load();
+          return m;
+        },
       ),
     ],
-    child: widget.child,
+    child: child,
   );
 }

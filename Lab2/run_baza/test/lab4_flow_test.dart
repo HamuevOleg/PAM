@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
-import 'package:run_baza/data/mock_repositories.dart';
+
+import 'support/fake_repositories.dart';
+
 import 'package:run_baza/models/plan_model.dart';
 import 'package:run_baza/models/profile_model.dart';
 import 'package:run_baza/widgets/data_status.dart';
@@ -54,12 +56,14 @@ void main() {
     },
   );
 
-  testWidgets('The profile failure switch controls catalog errors and retry', (
+  testWidgets('Repository failures still use the existing error and retry UI', (
     tester,
   ) async {
     final router = await launch(tester, '/profile');
-    await tapVisible(tester, find.byKey(const Key('diagnostics')));
-    await tapVisible(tester, find.byKey(const Key('simulate-error')));
+    final repository = tester
+        .element(find.byType(Scaffold).first)
+        .read<MockRaceRepository>();
+    repository.simulateError = true;
     router.go('/races');
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('reload-races')));
@@ -71,7 +75,7 @@ void main() {
     expect(find.byType(ErrorView), findsOneWidget);
     router.go('/profile');
     await tester.pumpAndSettle();
-    await tapVisible(tester, find.byKey(const Key('simulate-error')));
+    repository.simulateError = false;
     await tapVisible(tester, find.byKey(const Key('retry')));
     router.go('/races');
     await tester.pumpAndSettle();
