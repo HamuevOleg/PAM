@@ -21,7 +21,12 @@ class DeferredRepository implements Repository<Item> {
   final reads = <Completer<Result<List<Item>>>>[];
   final creates = <Completer<Result<Item>>>[];
   @override
-  Future<Result<List<Item>>> fetchAll() {
+  Future<Result<List<Item>>> fetchAll({
+    int page = 1,
+    int limit = 20,
+    String? search,
+    String? country,
+  }) {
     final result = Completer<Result<List<Item>>>();
     reads.add(result);
     return result.future;

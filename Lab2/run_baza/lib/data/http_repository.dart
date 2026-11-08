@@ -11,10 +11,21 @@ class HttpRepository<T extends Entity> implements Repository<T> {
   final Map<String, Object?> Function(T) toJson;
 
   @override
-  Future<Result<List<T>>> fetchAll() => api.request(
+  Future<Result<List<T>>> fetchAll({
+    int page = 1,
+    int limit = 20,
+    String? search,
+    String? country,
+  }) => api.request(
     'GET',
     path,
     successStatus: 200,
+    query: {
+      'page': '$page',
+      'limit': '$limit',
+      if (search != null && search.isNotEmpty) 'search': search,
+      if (country != null && country.isNotEmpty) 'country': country,
+    },
     decode: (json) {
       final envelope = json as Map<String, dynamic>;
       return (envelope['items'] as List)

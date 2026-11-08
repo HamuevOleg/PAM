@@ -16,6 +16,7 @@ String apiMessage(http.Response response, {bool signingIn = false}) {
             ? 'Неверный email или пароль.'
             : 'Сессия завершена. Войдите снова.',
       'EMAIL_TAKEN' => 'Аккаунт с этим email уже существует.',
+      'CONFLICT' => 'Запись уже существует или связана с другими данными.',
       'NOT_FOUND' => 'Запись не существует.',
       _ => 'Ошибка сервера (${response.statusCode}). Попробуйте позже.',
     };

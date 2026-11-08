@@ -46,9 +46,31 @@ class MockRepository<T extends Entity> implements Repository<T> {
   static const _missing = 'Запись больше не существует.';
 
   @override
-  Future<Result<List<T>>> fetchAll() async {
+  Future<Result<List<T>>> fetchAll({
+    int page = 1,
+    int limit = 20,
+    String? search,
+    String? country,
+  }) async {
     if (await _fails()) return const Err(_networkError);
-    return Ok(List.unmodifiable(_records));
+    final matching = _records
+        .where(
+          (r) =>
+              search == null ||
+              search.isEmpty ||
+              (r is Race &&
+                  '${r.title} ${r.city} ${r.distanceLabel}'
+                      .toLowerCase()
+                      .contains(search.toLowerCase())),
+        )
+        .where(
+          (r) =>
+              country == null ||
+              country.isEmpty ||
+              (r is Race && r.country.name == country),
+        )
+        .toList();
+    return Ok(List.unmodifiable(matching.skip((page - 1) * limit).take(limit)));
   }
 
   @override
