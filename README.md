@@ -7,8 +7,9 @@
 
 ## Topic
 
-The description below is the product plan. The current Lab 4 build uses a local
-mock repository; it does not retrieve live race information or book seats.
+The description below is the product plan. The current Lab 5 build uses a local
+TypeScript/Hono API and SQLite. The race catalog is demonstration data. Driver
+offers and passenger requests are private records, not confirmed bookings.
 
 RunBaza is a mobile application for amateur runners in Moldova and nearby Romanian cities
 (Iași, București). It collects all upcoming running races - road marathons, half marathons,
@@ -63,8 +64,9 @@ RunBaza puts everything in one place on the runner's phone.
 - **Flutter** (Dart) - cross-platform UI framework, primary target **iOS**
 - **Xcode / iOS Simulator** - build and run on macOS
 - State management: Provider and ChangeNotifier (Lab 4)
-- Current storage: in-memory repositories; disk persistence is a future step
-- Data source: typed mock repositories with asynchronous CRUD; HTTP is a future step
+- Server storage: SQLite with per-user records
+- Data source: typed HTTP repositories, TypeScript and Hono API
+- Authentication: JWT, local token storage and automatic logout on HTTP 401
 - Planned notifications: `flutter_local_notifications`
 - Version control: Git / GitHub
 
@@ -93,6 +95,7 @@ mobile application with offline access, notifications and interactive carpooling
 | [Lab 2](Lab2/README.md) | RunBaza UI, distance screens, animated city illustrations, report | Ready |
 | [Lab 3](Lab3/README.md) | Router, five stateful tabs, forms, validation, iOS evidence and defense guide | Ready |
 | [Lab 4](Lab4/README.md) | Shared state, repository CRUD, error recovery and redesigned profile | Ready |
+| [Lab 5](Lab5/README.md) | Hono backend, real auth, HTTP CRUD, server search and pagination | Ready |
 
 ## Development and CI
 
@@ -104,8 +107,9 @@ committed so local and CI dependency versions stay consistent.
 Work in a separate branch and open a pull request into `main`.
 
 The current app continues in `Lab2/run_baza`. Lab 3 added navigation and forms;
-Lab 4 adds repository-backed state, working mutations and profile preferences.
-Login and registration validate input locally. Backend
-authentication, account creation, carpool booking and persistence remain planned features. Lab 2 is preserved in `lab/2-runbaza-ui`.
+Lab 4 added repository-backed state and profile preferences. Lab 5 replaces the
+runtime mocks with HTTP, adds account creation, login and persistent server data.
+Start the API before opening the app; see [Lab 5 instructions](Lab5/README.md).
+Offline data caching is reserved for Lab 6. Lab 2 is preserved in `lab/2-runbaza-ui`.
 
 ![RunBaza interface](Lab2/evidence/redesign-2026-09-28/preview.jpg)

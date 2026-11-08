@@ -1,10 +1,14 @@
+import 'support/test_app.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:run_baza/main.dart';
 import 'package:run_baza/router.dart';
 import 'package:run_baza/screens/trip_form_screen.dart';
 import 'package:run_baza/screens/participation_form_screen.dart';
-import 'package:run_baza/data/mock_data.dart';
+
+import 'support/fixtures.dart';
+
 import 'package:run_baza/data/race.dart';
 import 'package:run_baza/screens/home_screen.dart';
 import 'package:run_baza/screens/login_screen.dart';
@@ -54,7 +58,7 @@ void main() {
           addTearDown(tester.view.resetPhysicalSize);
           addTearDown(tester.view.resetDevicePixelRatio);
           await tester.pumpWidget(
-            RunBazaScope(
+            TestScope(
               child: MaterialApp(
                 theme: buildTheme(brightness),
                 home: MediaQuery(
@@ -93,7 +97,7 @@ void main() {
     ) async {
       final router = createRouter(initialLocation: '/home');
       addTearDown(router.dispose);
-      await tester.pumpWidget(RunBazaApp(router: router));
+      await tester.pumpWidget(TestApp(router: router));
       await tester.pumpAndSettle();
       final option = find.byWidgetPredicate(
         (w) =>
@@ -121,7 +125,7 @@ void main() {
   testWidgets('Home reaches calendar and returns', (tester) async {
     final router = createRouter(initialLocation: '/home');
     addTearDown(router.dispose);
-    await tester.pumpWidget(RunBazaApp(router: router));
+    await tester.pumpWidget(TestApp(router: router));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Забеги'));
     await tester.pumpAndSettle();
@@ -136,7 +140,7 @@ void main() {
     ) async {
       final router = createRouter(initialLocation: '/races/r1');
       addTearDown(router.dispose);
-      await tester.pumpWidget(RunBazaApp(router: router));
+      await tester.pumpWidget(TestApp(router: router));
       await tester.pumpAndSettle();
       final choice = find.byWidgetPredicate(
         (w) => w is DistanceOption && w.distance == distance,

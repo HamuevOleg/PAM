@@ -1,0 +1,23 @@
+$ curl -X POST http://127.0.0.1:8090/auth/register -H "Content-Type: application/json" -d '{"email": "curl-5e728b02-f168-4f7e-aa2c-2df90a336c63@example.com", "password": "runbaza26", "name": "Curl Runner"}'
+HTTP 201
+{"token": "[JWT redacted]", "user": {"id": 8, "email": "curl-5e728b02-f168-4f7e-aa2c-2df90a336c63@example.com", "name": "Curl Runner"}}
+
+$ curl -X GET http://127.0.0.1:8090/plans
+HTTP 401
+{"error": {"code": "UNAUTHORIZED", "message": "Authentication required"}}
+
+$ curl -X POST http://127.0.0.1:8090/plans -H "Content-Type: application/json" -d '{"raceId": "r1", "reminderDays": 2, "distance": 10, "pace": "5:40", "visibility": "private"}' -H "Authorization: Bearer $TOKEN"
+HTTP 201
+{"id": "6e91bc21-9e74-4cea-bf1e-be3a5b096f91", "raceId": "r1", "reminderDays": 2, "distance": 10, "pace": "5:40", "visibility": "private"}
+
+$ curl -X GET http://127.0.0.1:8090/plans?search=5%3A40 -H "Authorization: Bearer $TOKEN"
+HTTP 200
+{"items": [{"id": "6e91bc21-9e74-4cea-bf1e-be3a5b096f91", "raceId": "r1", "reminderDays": 2, "distance": 10, "pace": "5:40", "visibility": "private"}], "page": 1, "limit": 20, "total": 1}
+
+$ curl -X PUT http://127.0.0.1:8090/plans/6e91bc21-9e74-4cea-bf1e-be3a5b096f91 -H "Content-Type: application/json" -d '{"raceId": "r1", "reminderDays": 3, "distance": 21.1, "pace": "5:50", "visibility": "private"}' -H "Authorization: Bearer $TOKEN"
+HTTP 200
+{"id": "6e91bc21-9e74-4cea-bf1e-be3a5b096f91", "raceId": "r1", "reminderDays": 3, "distance": 21.1, "pace": "5:50", "visibility": "private"}
+
+$ curl -X DELETE http://127.0.0.1:8090/plans/6e91bc21-9e74-4cea-bf1e-be3a5b096f91 -H "Authorization: Bearer $TOKEN"
+HTTP 204
+[empty body]

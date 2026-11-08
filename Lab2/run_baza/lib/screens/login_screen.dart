@@ -1,3 +1,8 @@
+import 'package:provider/provider.dart';
+
+import '../data/session_controller.dart';
+import '../data/result.dart';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,6 +22,31 @@ class _LoginScreenState extends State<LoginScreen> {
   final _email = TextEditingController();
   final _password = TextEditingController();
   bool _hidden = true;
+  bool _signingIn = false;
+
+  Future<void> _signIn() async {
+    if (_signingIn || !_formKey.currentState!.validate()) return;
+    FocusScope.of(context).unfocus();
+    final email = _email.text.trim().toLowerCase();
+    setState(() => _signingIn = true);
+    final session = context.read<SessionController>();
+    final results = await Future.wait([
+      session.auth.login(email, _password.text),
+      Future<void>.delayed(const Duration(seconds: 3)),
+    ]);
+    if (!mounted) return;
+    final result = results.first as Result<void>;
+    if (result case Err(:final msg)) {
+      setState(() => _signingIn = false);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+      return;
+    }
+    session.acceptLogin();
+    if (!mounted) return;
+    widget.onSignedIn?.call(email);
+    context.go('/home');
+  }
+
   @override
   void dispose() {
     _email.dispose();
@@ -70,6 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     key: const Key('login-email'),
                     controller: _email,
+                    enabled: !_signingIn,
                     validator: Validators.email,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.emailAddress,
@@ -84,6 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     key: const Key('login-password'),
                     controller: _password,
+                    enabled: !_signingIn,
                     validator: Validators.password,
                     obscureText: _hidden,
                     enableSuggestions: false,
@@ -93,7 +125,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
                         tooltip: _hidden ? 'Показать пароль' : 'Скрыть пароль',
-                        onPressed: () => setState(() => _hidden = !_hidden),
+                        onPressed: _signingIn
+                            ? null
+                            : () => setState(() => _hidden = !_hidden),
                         icon: Icon(
                           _hidden
                               ? Icons.visibility_outlined
@@ -105,27 +139,32 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 20),
                   FilledButton(
                     key: const Key('login-submit'),
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        FocusScope.of(context).unfocus();
-                        widget.onSignedIn?.call(
-                          _email.text.trim().toLowerCase(),
-                        );
-                        context.go('/home');
-                      }
-                    },
-                    child: const Row(
+                    onPressed: _signingIn ? null : _signIn,
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Войти'),
-                        Icon(Icons.arrow_forward, size: 20),
+                        Text(_signingIn ? 'Входим…' : 'Войти'),
+                        if (_signingIn)
+                          const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              key: Key('login-loading'),
+                              strokeWidth: 2,
+                              semanticsLabel: 'Выполняется вход',
+                            ),
+                          )
+                        else
+                          const Icon(Icons.arrow_forward, size: 20),
                       ],
                     ),
                   ),
                   const SizedBox(height: 12),
                   OutlinedButton(
                     key: const Key('login-register'),
-                    onPressed: () => context.push('/register'),
+                    onPressed: _signingIn
+                        ? null
+                        : () => context.push('/register'),
                     child: const Text('Создать профиль'),
                   ),
                 ],

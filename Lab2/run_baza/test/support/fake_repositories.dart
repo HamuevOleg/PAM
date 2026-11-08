@@ -1,16 +1,18 @@
-import 'entity.dart';
-import 'mock_data.dart' as seed;
-import 'race.dart';
-import 'plan_entry.dart';
-import 'transfer.dart';
-import 'runner_profile.dart';
-import 'repository.dart';
-import 'race_repository.dart';
-import 'plan_repository.dart';
-import 'offer_repository.dart';
-import 'request_repository.dart';
-import 'profile_repository.dart';
-import 'result.dart';
+import 'package:run_baza/data/entity.dart';
+
+import 'fixtures.dart' as seed;
+
+import 'package:run_baza/data/race.dart';
+import 'package:run_baza/data/plan_entry.dart';
+import 'package:run_baza/data/transfer.dart';
+import 'package:run_baza/data/runner_profile.dart';
+import 'package:run_baza/data/repository.dart';
+import 'package:run_baza/data/race_repository.dart';
+import 'package:run_baza/data/plan_repository.dart';
+import 'package:run_baza/data/offer_repository.dart';
+import 'package:run_baza/data/request_repository.dart';
+import 'package:run_baza/data/profile_repository.dart';
+import 'package:run_baza/data/result.dart';
 
 /// Shared only by the mock repositories and the failure demonstration control.
 class MockFailure {
@@ -44,9 +46,31 @@ class MockRepository<T extends Entity> implements Repository<T> {
   static const _missing = 'Запись больше не существует.';
 
   @override
-  Future<Result<List<T>>> fetchAll() async {
+  Future<Result<List<T>>> fetchAll({
+    int page = 1,
+    int limit = 20,
+    String? search,
+    String? country,
+  }) async {
     if (await _fails()) return const Err(_networkError);
-    return Ok(List.unmodifiable(_records));
+    final matching = _records
+        .where(
+          (r) =>
+              search == null ||
+              search.isEmpty ||
+              (r is Race &&
+                  '${r.title} ${r.city} ${r.distanceLabel}'
+                      .toLowerCase()
+                      .contains(search.toLowerCase())),
+        )
+        .where(
+          (r) =>
+              country == null ||
+              country.isEmpty ||
+              (r is Race && r.country.name == country),
+        )
+        .toList();
+    return Ok(List.unmodifiable(matching.skip((page - 1) * limit).take(limit)));
   }
 
   @override

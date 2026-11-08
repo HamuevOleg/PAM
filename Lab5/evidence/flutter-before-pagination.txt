@@ -1,0 +1,145 @@
+00:00 +0: loading /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/race_motif_test.dart
+00:00 +0: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/repository_test.dart: Every repository implements CRUD and reports missing IDs
+00:00 +1: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/repository_test.dart: Every repository implements CRUD and reports missing IDs
+00:00 +2: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/race_motif_test.dart: vineyard has bounded vector art
+00:00 +3: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/race_motif_test.dart: vineyard has bounded vector art
+00:00 +4: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/race_motif_test.dart: vineyard has bounded vector art
+00:00 +5: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/race_motif_test.dart: vineyard has bounded vector art
+00:00 +6: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/repository_test.dart: Mock latency leaves a visible loading interval
+00:00 +7: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/repository_test.dart: Mock latency leaves a visible loading interval
+00:00 +8: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/repository_test.dart: Mock latency leaves a visible loading interval
+00:00 +9: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/repository_test.dart: Mock latency leaves a visible loading interval
+00:00 +10: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/repository_test.dart: Mock latency leaves a visible loading interval
+00:00 +11: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/repository_test.dart: Mock latency leaves a visible loading interval
+00:00 +12: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/repository_test.dart: Mock latency leaves a visible loading interval
+00:00 +13: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/repository_test.dart: Mock latency leaves a visible loading interval
+00:00 +14: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/repository_test.dart: Mock latency leaves a visible loading interval
+00:00 +15: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Removing and restoring a plan entry updates details, badge and profile
+00:00 +16: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Removing and restoring a plan entry updates details, badge and profile
+00:00 +17: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Removing and restoring a plan entry updates details, badge and profile
+00:01 +18: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Removing and restoring a plan entry updates details, badge and profile
+00:01 +19: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Removing and restoring a plan entry updates details, badge and profile
+00:01 +20: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Removing and restoring a plan entry updates details, badge and profile
+00:01 +21: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Removing and restoring a plan entry updates details, badge and profile
+00:01 +22: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Removing and restoring a plan entry updates details, badge and profile
+00:01 +23: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Removing and restoring a plan entry updates details, badge and profile
+00:01 +24: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Removing and restoring a plan entry updates details, badge and profile
+00:02 +25: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Removing and restoring a plan entry updates details, badge and profile
+00:02 +26: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/navigation_forms_test.dart: Branches retain filter, scroll, detail ID and back stack
+00:02 +27: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/navigation_forms_test.dart: Branches retain filter, scroll, detail ID and back stack
+00:02 +28: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/registration_test.dart: Changing original password invalidates a previously matching confirmation
+00:02 +29: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/registration_test.dart: Changing original password invalidates a previously matching confirmation
+00:02 +30: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/registration_test.dart: Changing original password invalidates a previously matching confirmation
+00:02 +31: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Repository failures still use the existing error and retry UI
+00:02 +32: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 5 at width 320.0 / Brightness.light / 1.2, scroll without overflow
+00:02 +33: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 5 at width 320.0 / Brightness.light / 1.2, scroll without overflow
+00:02 +34: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/registration_test.dart: Registration supports Brightness.dark, large text and password visibility
+00:02 +35: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: A failed profile save keeps input, then retry updates the passport
+00:02 +36: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: A failed profile save keeps input, then retry updates the passport
+00:02 +37: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: A failed profile save keeps input, then retry updates the passport
+00:02 +38: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: A failed profile save keeps input, then retry updates the passport
+00:02 +39: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: A failed profile save keeps input, then retry updates the passport
+00:02 +40: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 7 at width 320.0 / Brightness.light / 1.2, scroll without overflow
+00:03 +41: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/navigation_forms_test.dart: Bad link /transfers/unknown/offer is recoverable
+00:03 +42: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +43: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +44: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +45: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +46: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +47: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +48: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +49: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +50: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +51: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +52: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +53: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +54: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +55: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +56: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +57: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +58: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +59: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +60: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +61: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +62: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +63: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/lab4_flow_test.dart: Invalid profile goals are rejected and theme changes affect the app
+00:03 +64: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/navigation_forms_test.dart: Trip form driver=true rejects errors, writes valid values through the repository
+00:03 +65: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 11 at width 320.0 / Brightness.light / 1.2, scroll without overflow
+00:03 +66: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/navigation_forms_test.dart: Trip form driver=false rejects errors, writes valid values through the repository
+00:03 +67: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/navigation_forms_test.dart: Trip form driver=false rejects errors, writes valid values through the repository
+00:03 +68: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/navigation_forms_test.dart: Trip form driver=false rejects errors, writes valid values through the repository
+00:04 +69: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 14 at width 320.0 / Brightness.light / 1.2, scroll without overflow
+00:04 +70: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/navigation_forms_test.dart: Participation edits a saved entry after validating its fields
+00:04 +71: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/navigation_forms_test.dart: Participation edits a saved entry after validating its fields
+00:04 +72: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/navigation_forms_test.dart: Participation edits a saved entry after validating its fields
+00:04 +73: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/navigation_forms_test.dart: Participation edits a saved entry after validating its fields
+00:04 +74: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/navigation_forms_test.dart: Participation edits a saved entry after validating its fields
+00:04 +75: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/navigation_forms_test.dart: Participation edits a saved entry after validating its fields
+00:04 +76: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/navigation_forms_test.dart: Participation edits a saved entry after validating its fields
+00:04 +77: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/navigation_forms_test.dart: Participation edits a saved entry after validating its fields
+00:04 +78: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/animated_route_test.dart: Route draws progressively, completes and can replay
+00:04 +79: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/animated_route_test.dart: Route draws progressively, completes and can replay
+00:04 +80: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/animated_route_test.dart: Route draws progressively, completes and can replay
+00:04 +81: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/animated_route_test.dart: Route draws progressively, completes and can replay
+00:04 +82: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/animated_route_test.dart: Route draws progressively, completes and can replay
+00:04 +83: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/animated_route_test.dart: Route draws progressively, completes and can replay
+00:04 +84: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 4 at width 430.0 / Brightness.light / 1.2, scroll without overflow
+00:04 +85: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 4 at width 430.0 / Brightness.light / 1.2, scroll without overflow
+00:04 +86: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/animated_route_test.dart: Changing distance restarts with the other route
+00:04 +87: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 5 at width 430.0 / Brightness.light / 1.2, scroll without overflow
+00:04 +88: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/animated_route_test.dart: Changing city at the same distance restarts the correct artwork
+00:04 +89: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/animated_route_test.dart: Changing city at the same distance restarts the correct artwork
+00:04 +90: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 7 at width 430.0 / Brightness.light / 1.2, scroll without overflow
+00:04 +91: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 7 at width 430.0 / Brightness.light / 1.2, scroll without overflow
+00:04 +92: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 8 at width 430.0 / Brightness.light / 1.2, scroll without overflow
+00:05 +93: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 9 at width 430.0 / Brightness.light / 1.2, scroll without overflow
+00:05 +94: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 10 at width 430.0 / Brightness.light / 1.2, scroll without overflow
+00:05 +95: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 11 at width 430.0 / Brightness.light / 1.2, scroll without overflow
+00:05 +96: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 12 at width 430.0 / Brightness.light / 1.2, scroll without overflow
+00:05 +97: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 13 at width 430.0 / Brightness.light / 1.2, scroll without overflow
+00:05 +98: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 14 at width 430.0 / Brightness.light / 1.2, scroll without overflow
+00:05 +99: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 15 at width 430.0 / Brightness.light / 1.2, scroll without overflow
+00:05 +100: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 16 at width 430.0 / Brightness.light / 1.2, scroll without overflow
+00:05 +101: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 0 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:05 +102: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 1 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:05 +103: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 2 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:05 +104: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 3 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:05 +105: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 4 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:05 +106: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 5 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:05 +107: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 6 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:05 +108: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 7 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:05 +109: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 8 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:05 +110: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 9 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:05 +111: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 10 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:05 +112: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 11 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:05 +113: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 12 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:06 +114: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 13 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:06 +115: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 14 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:06 +116: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 15 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:06 +117: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 16 at width 390.0 / Brightness.dark / 1.0, scroll without overflow
+00:06 +118: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 0 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +119: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 1 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +120: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 2 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +121: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 3 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +122: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 4 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +123: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 5 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +124: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 6 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +125: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 7 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +126: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 8 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +127: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 9 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +128: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 10 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +129: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 11 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +130: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 12 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +131: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 13 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +132: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 14 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +133: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 15 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +134: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Screen 16 at width 390.0 / Brightness.light / 1.6, scroll without overflow
+00:06 +135: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Home preview r4 opens the same city and distance
+00:06 +136: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Home preview r3 opens the same city and distance
+00:07 +137: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Home preview r1 opens the same city and distance
+00:07 +138: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Home preview r7 opens the same city and distance
+00:07 +139: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Home reaches calendar and returns
+00:07 +140: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Distance 10.0 opens from event, keeps race and returns
+00:07 +141: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Distance 21.1 opens from event, keeps race and returns
+00:07 +142: /Users/oleg.rune/Desktop/PAM/Lab2/run_baza/test/widget_test.dart: Mock data has valid references and required list sizes
+00:07 +143: All tests passed!

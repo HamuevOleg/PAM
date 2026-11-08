@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:run_baza/data/entity.dart';
-import 'package:run_baza/data/mock_repositories.dart';
+
+import 'support/fake_repositories.dart';
+
 import 'package:run_baza/data/plan_entry.dart';
 import 'package:run_baza/data/repository.dart';
 import 'package:run_baza/data/result.dart';
@@ -19,7 +21,12 @@ class DeferredRepository implements Repository<Item> {
   final reads = <Completer<Result<List<Item>>>>[];
   final creates = <Completer<Result<Item>>>[];
   @override
-  Future<Result<List<Item>>> fetchAll() {
+  Future<Result<List<Item>>> fetchAll({
+    int page = 1,
+    int limit = 20,
+    String? search,
+    String? country,
+  }) {
     final result = Completer<Result<List<Item>>>();
     reads.add(result);
     return result.future;

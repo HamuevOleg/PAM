@@ -1,0 +1,36 @@
+d58f31f Lab 5: verify auth and failure recovery on iOS and add launch scripts
+e39b77f Lab 5: connect server search and pagination and verify the API in CI
+fa96d09 Lab 5: replace runtime mocks with HTTP repositories and real authentication
+24e8175 Lab 5: implement Hono API with SQLite, JWT and RunBaza resources
+849ad5c Lab 5: add HTTP transport and token storage with error handling
+4c687e9 Lab 4: add report, defense guide and iOS evidence
+c963eb7 Lab 4: document state ownership and the iOS demonstration
+1c7bbf4 Lab 4: verify cross-screen updates and error recovery on iOS
+01654aa Lab 4: reuse profile defaults and show pending plan changes
+a585b69 Lab 4: keep seed data inside mock repositories
+da66016 Lab 4: update form and layout tests for repository-backed screens
+047358f Lab 4: redesign the runner profile and save personal preferences
+ae0d1c7 Lab 4: guard form callbacks after asynchronous writes
+d431219 Lab 4: create driver offers and passenger requests from forms
+b929823 Lab 4: load the transfer directory through the catalog
+90ee237 Lab 4: save participation forms through the plan repository
+998d829 Lab 4: share plan counts and confirm removal across screens
+15922f9 Lab 4: read distance pages through the catalog model
+c75ddd0 Lab 4: read race details through the catalog model
+b803cb8 Lab 4: add catalog loading, errors and retry
+1d3a55d Lab 4: load the home screen from shared repository state
+2fbefd5 Lab 4: provide shared models above the router and add retry views
+7af90f7 Lab 4: model shared state with loading and mutation notifications
+b31f9b3 Lab 4: add repository contracts and delayed mock CRUD
+43d8db8 Lab 4: add provider dependency
+03c3974 Use English in lab documentation and code comments
+cdc6c65 Lab 3: add registration form and session profile
+f55bdd8 Lab 3: add Word and PDF reports, defense guide, and iOS screenshots
+8f003bc Lab 3: keep all form fields mounted while scrolling
+cf74c2a Lab 3: scroll long forms in the iPhone integration scenario
+3997ef0 Lab 3: add navigation and form tests, iOS scenarios, and launch guide
+4f33fc4 Lab 3: add validated forms, profile editing, and logout confirmation
+4eab849 Lab 3: add five independent StatefulShellRoute tabs
+5c420fe Lab 3: define routes and ID-based navigation
+6ffd49a Lab 3: add go_router dependency
+c2b88af Add Lab 2: RunBaza interface and animated distance screens

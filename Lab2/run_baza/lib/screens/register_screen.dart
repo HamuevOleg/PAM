@@ -1,3 +1,8 @@
+import 'package:provider/provider.dart';
+
+import '../data/session_controller.dart';
+import '../data/result.dart';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -6,8 +11,8 @@ import '../forms/validators.dart';
 import '../widgets/design.dart';
 
 class RegisterScreen extends StatefulWidget {
-  final ValueChanged<RunnerIdentity> onRegistered;
-  const RegisterScreen({super.key, required this.onRegistered});
+  final ValueChanged<RunnerIdentity>? onRegistered;
+  const RegisterScreen({super.key, this.onRegistered});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -19,6 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _email = TextEditingController();
   final _password = TextEditingController();
   final _confirmation = TextEditingController();
+  bool _busy = false;
   bool _hidePassword = true;
   bool _hideConfirmation = true;
 
@@ -30,10 +36,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  void _submit() {
-    if (!_formKey.currentState!.validate()) return;
+  Future<void> _submit() async {
+    if (_busy || !_formKey.currentState!.validate()) return;
     FocusScope.of(context).unfocus();
-    widget.onRegistered(
+    setState(() => _busy = true);
+    final result = await context.read<SessionController>().register(
+      _email.text,
+      _password.text,
+      _name.text,
+    );
+    if (!mounted) return;
+    if (result case Err(:final msg)) {
+      setState(() => _busy = false);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+      return;
+    }
+    widget.onRegistered?.call(
       RunnerIdentity(
         name: _name.text.trim(),
         email: _email.text.trim().toLowerCase(),
@@ -61,7 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         leading: IconButton(
           key: const Key('register-back'),
           tooltip: 'Вернуться ко входу',
-          onPressed: _backToLogin,
+          onPressed: _busy ? null : _backToLogin,
           icon: const Icon(Icons.arrow_back),
         ),
       ),
@@ -114,6 +132,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       key: const Key('register-name'),
                       controller: _name,
+                      enabled: !_busy,
                       validator: Validators.name,
                       textCapitalization: TextCapitalization.words,
                       textInputAction: TextInputAction.next,
@@ -127,6 +146,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       key: const Key('register-email'),
                       controller: _email,
+                      enabled: !_busy,
                       validator: Validators.email,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
@@ -142,6 +162,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       key: const Key('register-password'),
                       controller: _password,
+                      enabled: !_busy,
                       validator: Validators.registrationPassword,
                       obscureText: _hidePassword,
                       enableSuggestions: false,
@@ -171,6 +192,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       key: const Key('register-confirmation'),
                       controller: _confirmation,
+                      enabled: !_busy,
                       validator: (value) =>
                           Validators.confirmPassword(value, _password.text),
                       obscureText: _hideConfirmation,
@@ -200,19 +222,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(height: 24),
                     FilledButton(
                       key: const Key('register-submit'),
-                      onPressed: _submit,
-                      child: const Row(
+                      onPressed: _busy ? null : _submit,
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(child: Text('Создать профиль')),
-                          Icon(Icons.arrow_forward, size: 20),
+                          Expanded(
+                            child: Text(
+                              _busy ? 'Создаём профиль…' : 'Создать профиль',
+                            ),
+                          ),
+                          if (_busy)
+                            const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          else
+                            const Icon(Icons.arrow_forward, size: 20),
                         ],
                       ),
                     ),
                     const SizedBox(height: 12),
                     TextButton(
                       key: const Key('register-login'),
-                      onPressed: _backToLogin,
+                      onPressed: _busy ? null : _backToLogin,
                       child: const Text('Уже есть профиль? Войти'),
                     ),
                   ],

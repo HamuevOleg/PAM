@@ -1,7 +1,8 @@
+import 'support/test_app.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:run_baza/main.dart';
 import 'package:run_baza/router.dart';
 import 'package:run_baza/forms/validators.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ Future<GoRouter> launch(WidgetTester tester, String location) async {
   addTearDown(tester.view.resetDevicePixelRatio);
   final router = createRouter(initialLocation: location);
   addTearDown(router.dispose);
-  await tester.pumpWidget(RunBazaApp(router: router));
+  await tester.pumpWidget(TestApp(router: router));
   await tester.pump(const Duration(seconds: 1));
   await tester.pumpAndSettle();
   return router;
@@ -104,7 +105,22 @@ void main() {
     expect(router.routeInformationProvider.value.uri.path, '/login');
     await fill(tester, 'login-email', 'runner@example.com');
     await fill(tester, 'login-password', 'abcdef');
-    await tapVisible(tester, find.byKey(const Key('login-submit')));
+    final submit = find.byKey(const Key('login-submit'));
+    await tester.ensureVisible(submit);
+    await tester.tap(submit);
+    await tester.pump();
+    expect(find.byKey(const Key('login-loading')), findsOneWidget);
+    expect(tester.widget<FilledButton>(submit).onPressed, isNull);
+    expect(
+      tester
+          .widget<TextFormField>(find.byKey(const Key('login-email')))
+          .enabled,
+      isFalse,
+    );
+    await tester.pump(const Duration(seconds: 2));
+    expect(router.routeInformationProvider.value.uri.path, '/login');
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
     expect(router.routeInformationProvider.value.uri.path, '/home');
     expect(router.canPop(), isFalse);
     expect(find.byType(NavigationBar), findsOneWidget);

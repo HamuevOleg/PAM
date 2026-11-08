@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:run_baza/data/entity.dart';
-import 'package:run_baza/data/mock_repositories.dart';
+
+import 'support/fake_repositories.dart';
+
 import 'package:run_baza/data/plan_entry.dart';
 import 'package:run_baza/data/repository.dart';
 import 'package:run_baza/data/result.dart';

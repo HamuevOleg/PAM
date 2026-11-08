@@ -1,0 +1,10 @@
+Verified on iPhone 17 Pro Simulator, iOS 26.5.
+Normal main.dart build with API_BASE_URL=http://127.0.0.1:8090.
+The integration run used --keep-app-running to retain the app container.
+
+xcrun simctl terminate booted md.utm.pam.runBaza
+xcrun simctl launch booted md.utm.pam.runBaza
+md.utm.pam.runBaza: 40657
+
+Observed: home screen without login, personal plan badge 1.
+Screenshot: ios/16-process-restarted.png

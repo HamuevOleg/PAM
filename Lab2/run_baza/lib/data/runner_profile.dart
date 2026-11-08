@@ -1,3 +1,4 @@
+import 'json_fields.dart';
 import 'entity.dart';
 
 enum AppAppearance { system, light, dark }
@@ -23,6 +24,33 @@ class RunnerProfile implements Entity {
     this.appearance = AppAppearance.system,
     this.publicPlan = false,
   });
+
+  factory RunnerProfile.fromJson(Map<String, dynamic> j) => RunnerProfile(
+    id: jsonId(j['id']),
+    name: j['name'] as String,
+    email: j['email'] as String,
+    city: j['city'] as String,
+    pace: j['pace'] as String,
+    bio: j['bio'] as String,
+    preferredDistance: (j['preferredDistance'] as num).toDouble(),
+    seasonGoal: j['seasonGoal'] as int,
+    avatar: j['avatar'] as int,
+    appearance: jsonEnum(AppAppearance.values, j['appearance']),
+    publicPlan: j['publicPlan'] as bool,
+  );
+
+  Map<String, Object?> toJson() => {
+    'name': name,
+    'email': email,
+    'city': city,
+    'pace': pace,
+    'bio': bio,
+    'preferredDistance': preferredDistance,
+    'seasonGoal': seasonGoal,
+    'avatar': avatar,
+    'appearance': appearance.name,
+    'publicPlan': publicPlan,
+  };
 
   RunnerProfile copyWith({
     String? id,

@@ -1,11 +1,9 @@
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
-import 'models/profile_model.dart';
+import 'data/session_controller.dart';
 import 'screens/profile_form_screen.dart';
 
 import 'widgets/app_shell.dart';
-import 'data/runner_identity.dart';
 import 'screens/register_screen.dart';
 
 import 'screens/home_screen.dart';
@@ -21,34 +19,26 @@ import 'screens/my_plan_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/not_found_screen.dart';
 
-GoRouter createRouter({String initialLocation = '/login'}) {
+GoRouter createRouter({
+  String initialLocation = '/login',
+  SessionController? session,
+}) {
   return GoRouter(
-    initialLocation: initialLocation,
+    initialLocation: session?.signedIn == true ? '/home' : initialLocation,
+    refreshListenable: session,
+    redirect: (context, state) {
+      if (session == null) return null;
+      final auth = state.uri.path == '/login' || state.uri.path == '/register';
+      if (!session.signedIn && !auth) return '/login';
+      if (session.signedIn && auth) return '/home';
+      return null;
+    },
     errorBuilder: (context, state) => const NotFoundScreen(),
     routes: [
-      GoRoute(
-        path: '/login',
-        builder: (context, state) => LoginScreen(
-          onSignedIn: (email) {
-            final model = context.read<ProfileModel>();
-            final current = model.profile;
-            model.startSession(
-              RunnerIdentity(
-                name: current?.email == email
-                    ? current!.name
-                    : email.split('@').first,
-                email: email,
-              ),
-            );
-          },
-        ),
-      ),
+      GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(
         path: '/register',
-        builder: (context, state) => RegisterScreen(
-          onRegistered: (profile) =>
-              context.read<ProfileModel>().startSession(profile),
-        ),
+        builder: (context, state) => const RegisterScreen(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>

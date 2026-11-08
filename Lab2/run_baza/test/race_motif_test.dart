@@ -6,7 +6,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:run_baza/widgets/race_motif.dart';
 
 import 'package:run_baza/data/race_motif.dart';
-import 'package:run_baza/data/mock_data.dart';
+
+import 'support/fixtures.dart';
+
 import 'package:run_baza/data/race.dart';
 
 void main() {

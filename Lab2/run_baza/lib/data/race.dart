@@ -1,3 +1,4 @@
+import 'json_fields.dart';
 import 'entity.dart';
 import 'race_motif.dart';
 
@@ -45,6 +46,54 @@ class Race implements Entity {
     required this.organizerNote,
     required this.registrationUrl,
   });
+
+  factory Race.fromJson(Map<String, dynamic> j) => Race(
+    id: jsonId(j['id']),
+    previewDistance: (j['previewDistance'] as num?)?.toDouble(),
+    country: jsonEnum(RaceCountry.values, j['country']),
+    artwork: jsonEnum(RaceMotif.values, j['artwork']),
+    code: j['code'] as String,
+    title: j['title'] as String,
+    date: j['date'] as String,
+    time: j['time'] as String,
+    city: j['city'] as String,
+    venue: j['venue'] as String,
+    season: j['season'] as String,
+    distanceFromChisinau: j['distanceFromChisinau'] as int,
+    distances: (j['distances'] as List)
+        .map((v) => (v as num).toDouble())
+        .toList(),
+    type: j['type'] as String,
+    status: j['status'] as String,
+    fee: j['fee'] as int,
+    currency: j['currency'] as String,
+    discount: j['discount'] as String,
+    organizerNote: j['organizerNote'] as String,
+    registrationUrl: j['registrationUrl'] as String,
+  );
+
+  Map<String, Object?> toJson() => {
+    'previewDistance': previewDistance,
+    'country': country.name,
+    'artwork': artwork.name,
+    'code': code,
+    'title': title,
+    'date': date,
+    'time': time,
+    'city': city,
+    'venue': venue,
+    'season': season,
+    'distanceFromChisinau': distanceFromChisinau,
+    'distances': distances,
+    'type': type,
+    'status': status,
+    'fee': fee,
+    'currency': currency,
+    'discount': discount,
+    'organizerNote': organizerNote,
+    'registrationUrl': registrationUrl,
+  };
+
   Race copyWith({String? id}) => Race(
     id: id ?? this.id,
     previewDistance: previewDistance,
