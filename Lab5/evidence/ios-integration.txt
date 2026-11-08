@@ -1,0 +1,20 @@
+flutter: 00:00 +0: Lab 5 real backend auth CRUD search failure recovery and 401
+flutter: Captured 01-login
+flutter: Captured 02-registration
+flutter: Captured 03-home-server
+flutter: Captured 04-page-one
+flutter: Captured 05-page-two
+flutter: Captured 06-server-search
+flutter: Captured 07-plan-created
+flutter: Captured 08-profile
+flutter: Captured 09-server-stopped
+flutter: Captured 10-retry-restored
+flutter: Captured 11-token-restored
+flutter: Captured 12-expired-session
+flutter: Captured 13-wrong-password
+flutter: Captured 14-persisted-plan
+flutter: Captured 15-logout
+flutter: 00:43 +1: (tearDownAll)
+flutter: 00:43 +2: All tests passed!
+All tests passed.
+Leaving the application running.

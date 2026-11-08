@@ -1,0 +1,4 @@
+ Lab2/run_baza/lib/screens/login_screen.dart    | 67 ++++++++++++++++++++------
+ Lab2/run_baza/lib/screens/register_screen.dart | 55 ++++++++++++++++-----
+ Lab2/run_baza/lib/screens/settings_screen.dart | 47 ++++--------------
+ 3 files changed, 107 insertions(+), 62 deletions(-)

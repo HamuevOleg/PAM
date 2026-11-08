@@ -1,0 +1,70 @@
+$ tsx --test test/*.test.ts
+PASS 01 health
+PASS 02 private endpoint requires token
+PASS 03 registration validation
+PASS 04 registration and JWT
+PASS 05 duplicate email
+PASS 06 wrong password
+PASS 07 login
+PASS 08 server page one
+PASS 09 non-overlapping page two
+PASS 10 invalid pagination
+PASS 11 Unicode search on server
+PASS 12 country filter on server
+PASS 13 notes create, server-generated ID
+PASS 14 notes get by ID
+PASS 15 notes cross-user privacy
+PASS 16 notes cross-user update rejected
+PASS 17 notes update
+PASS 18 notes delete
+PASS 19 notes deleted record
+PASS 20 races create, server-generated ID
+PASS 21 races get by ID
+PASS 22 races cross-user privacy
+PASS 23 races cross-user update rejected
+PASS 24 races update
+PASS 25 races delete
+PASS 26 races deleted record
+PASS 27 plans create, server-generated ID
+PASS 28 plans get by ID
+PASS 29 plans cross-user privacy
+PASS 30 plans cross-user update rejected
+PASS 31 plans update
+PASS 32 plans delete
+PASS 33 plans deleted record
+PASS 34 offers create, server-generated ID
+PASS 35 offers get by ID
+PASS 36 offers cross-user privacy
+PASS 37 offers cross-user update rejected
+PASS 38 offers update
+PASS 39 offers delete
+PASS 40 offers deleted record
+PASS 41 requests create, server-generated ID
+PASS 42 requests get by ID
+PASS 43 requests cross-user privacy
+PASS 44 requests cross-user update rejected
+PASS 45 requests update
+PASS 46 requests delete
+PASS 47 requests deleted record
+PASS 48 profile created with account
+PASS 49 profile update
+PASS 50 profile privacy
+PASS 51 foreign key validation
+PASS 52 duplicate participation prevented
+PASS 53 multipart upload
+PASS 54 file bytes and safe download headers
+PASS 55 file privacy
+PASS 56 upload size limit
+PASS 57 malformed JSON envelope
+PASS 58 bad token signature
+PASS 58/58 RunBaza project checks (not the course kit suite)
+✔ HTTP contract against a real listening Hono server (163.629375ms)
+✔ SQLite restart preserves records and changed JWT secret rejects the old session (31.2735ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 416.385916
